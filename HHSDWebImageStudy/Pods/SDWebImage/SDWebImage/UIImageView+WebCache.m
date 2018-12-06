@@ -37,12 +37,14 @@
     [self sd_setImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:completedBlock];
 }
 
+// *** 核心方法
 - (void)sd_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(SDWebImageOptions)options
                   progress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
                  completed:(nullable SDExternalCompletionBlock)completedBlock {
-    // 跳入 UIView+WebCache 中的 sd_internalSetImageWithURL: 方法执行（这里逻辑挪到了基类，不过 3.x.x 版本都在本文件内）
+    // 跳转 UIView+WebCache 中的 sd_internalSetImageWithURL: 方法执行
+    // <= 3.x.x 时，sd_internalSetImageWithURL: 在本类内部
     [self sd_internalSetImageWithURL:url
                     placeholderImage:placeholder
                              options:options
@@ -57,10 +59,16 @@
                                           options:(SDWebImageOptions)options
                                          progress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
                                         completed:(nullable SDExternalCompletionBlock)completedBlock {
+    // 1.取出本地缓存
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
     UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:key];
     
-    [self sd_setImageWithURL:url placeholderImage:lastPreviousCachedImage ?: placeholder options:options progress:progressBlock completed:completedBlock];    
+    // 2.调用核心方法
+    [self sd_setImageWithURL:url
+            placeholderImage:lastPreviousCachedImage ?: placeholder
+                     options:options
+                    progress:progressBlock
+                   completed:completedBlock];
 }
 
 #if SD_UIKIT

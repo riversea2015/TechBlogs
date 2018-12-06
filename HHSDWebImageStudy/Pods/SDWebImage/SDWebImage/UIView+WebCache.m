@@ -70,15 +70,14 @@ static char TAG_ACTIVITY_SHOW;
                          completed:(nullable SDExternalCompletionBlock)completedBlock
                            context:(nullable NSDictionary<NSString *, id> *)context {
     
-    // 取消当前 key 对应的 operation
+// 1.取消当前 validOperationKey 对应的 loadOperation
     NSString *validOperationKey = operationKey ?: NSStringFromClass([self class]);
     [self sd_cancelImageLoadOperationWithKey:validOperationKey];
     
-// imageURLKey 的作用是什么？
-    
-    // 此处只是将 url 和 imageURLKey 关联了起来，为了在分类中添加属性
+    // 此处只是将 url 和 imageURLKey 关联了起来 (类似在分类中添加属性) ----------------------------------- imageURLKey 的作用是什么？
     objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+    // 使用 placeHolder
     if (!(options & SDWebImageDelayPlaceholder)) {
         // dispatch_main_async_safe 宏定义，逻辑：如果当前线程是主线程，直接执行block，否则，切换到主线程执行block。
         dispatch_main_async_safe(^{
@@ -87,18 +86,19 @@ static char TAG_ACTIVITY_SHOW;
     }
     
     if (url) { // 如果图片 URL 存在，去获取图片(取缓存或请求网路) ↓
+        
+        // 展示加载动画
 #if SD_UIKIT
-        // check if activityView is enabled or not 旋转的小菊花^_^
         if ([self sd_showActivityIndicatorView]) {
             [self sd_addActivityIndicator];
         }
 #endif
         
-        // reset the progress
+        // 设置 progress 的初始值
         self.sd_imageProgress.totalUnitCount = 0;
         self.sd_imageProgress.completedUnitCount = 0;
         
-        // 创建 manager（用户自定义 还是 此库自带的单例）
+        // 创建 manager（两种：1.用户自定义 2.此库自带的单例）
         SDWebImageManager *manager;
         if ([context valueForKey:SDWebImageExternalCustomManagerKey]) {
             manager = (SDWebImageManager *)[context valueForKey:SDWebImageExternalCustomManagerKey];
@@ -107,33 +107,43 @@ static char TAG_ACTIVITY_SHOW;
         }
         
         __weak __typeof(self)wself = self;
-// 监测下载进度的 block
+        
+        // 监测下载进度的 block
         SDWebImageDownloaderProgressBlock combinedProgressBlock = ^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+            
             wself.sd_imageProgress.totalUnitCount = expectedSize;
             wself.sd_imageProgress.completedUnitCount = receivedSize;
+            
             if (progressBlock) {
                 progressBlock(receivedSize, expectedSize, targetURL);
             }
         };
-// 下载
+        
+// 2.*** 下载
         id <SDWebImageOperation> operation = [manager loadImageWithURL:url
                                                                options:options
                                                               progress:combinedProgressBlock
                                                              completed:^(UIImage *image, NSData *data, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
         {
             __strong __typeof (wself) sself = wself;
+            
             if (!sself) { return; }
+            
+            // 移除转圈的加载动画
 #if SD_UIKIT
             [sself sd_removeActivityIndicator];
 #endif
+            
             // if the progress not been updated, mark it to complete state
             if (finished && !error && sself.sd_imageProgress.totalUnitCount == 0 && sself.sd_imageProgress.completedUnitCount == 0) {
                 sself.sd_imageProgress.totalUnitCount = SDWebImageProgressUnitCountUnknown;
                 sself.sd_imageProgress.completedUnitCount = SDWebImageProgressUnitCountUnknown;
             }
+            
             BOOL shouldCallCompletedBlock = finished || (options & SDWebImageAvoidAutoSetImage);
             BOOL shouldNotSetImage = ((image && (options & SDWebImageAvoidAutoSetImage)) ||
                                       (!image && !(options & SDWebImageDelayPlaceholder)));
+            
             SDWebImageNoParamsBlock callCompletedBlockClojure = ^{
                 if (!sself) { return; }
                 if (!shouldNotSetImage) {
@@ -180,13 +190,20 @@ static char TAG_ACTIVITY_SHOW;
                 callCompletedBlockClojure();
             });
         }];
-        // 为 UIImageView 绑定新的 operation，及上边这个 operation
+        
+// 3.*** 为 UIImageView 绑定新的 operation，即上边这个 operation
         [self sd_setImageLoadOperation:operation forKey:validOperationKey];
-    } else { // 如果图片 URL 不存在，执行 block，返回错误提示
+        
+    } else {
+        
+        // 如果图片 URL 不存在，执行 completedBlock，返回错误提示
+        
         dispatch_main_async_safe(^{
+            
 #if SD_UIKIT
             [self sd_removeActivityIndicator];
 #endif
+            
             if (completedBlock) {
                 NSError *error = [NSError errorWithDomain:SDWebImageErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
                 completedBlock(nil, error, SDImageCacheTypeNone, url);

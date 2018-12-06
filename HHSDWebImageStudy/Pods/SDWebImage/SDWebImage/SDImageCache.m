@@ -516,7 +516,10 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 // *** 先获取缓存
 // *** 如果是从 memory 取的，不需要解压，因为已经是解压过的
 // *** 如果是从 disc 取的，需要解压(解压工作是在 queryCacheOperationForKey: 方法里做的)
-- (nullable NSOperation *)queryCacheOperationForKey:(nullable NSString *)key options:(SDImageCacheOptions)options done:(nullable SDCacheQueryCompletedBlock)doneBlock {
+- (nullable NSOperation *)queryCacheOperationForKey:(nullable NSString *)key
+                                            options:(SDImageCacheOptions)options
+                                               done:(nullable SDCacheQueryCompletedBlock)doneBlock
+{
     
     if (!key) {
         if (doneBlock) {

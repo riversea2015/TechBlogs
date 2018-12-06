@@ -129,6 +129,8 @@
                                     progress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
                                    completed:(nullable SDInternalCompletionBlock)completedBlock
 {
+    // 校验参数
+    
     // Invoking this method without a completedBlock is pointless
     NSAssert(completedBlock != nil, @"If you mean to prefetch the image, use -[SDWebImagePrefetcher prefetchURLs] instead");
 
@@ -143,11 +145,13 @@
         url = nil;
     }
 
+    // 1.构建 operation
+    
     SDWebImageCombinedOperation *operation = [SDWebImageCombinedOperation new];
-    operation.manager = self;
+    operation.manager = self; // 肯定是 weak 属性
 
-    // *** self.failedURLs 是一个保存曾经失败过的 URL 数组，用于检测当前 URL 是不是已经失败过的URL.
-    // *** 搜索一个个元素的时候，NSSet 比 NSArray 查询更快
+    // a.self.failedURLs 是一个保存曾经失败过的 URL 数组，用于检测当前 URL 是不是已经失败过的URL.
+    // b.搜索一个个元素的时候，NSSet 比 NSArray 查询更快
     BOOL isFailedUrl = NO;
     if (url) {
         LOCK(self.failedURLsLock);
@@ -156,9 +160,9 @@
     }
 
     /**
-     * 两种情况就不再往下走了：
-     * A.URL 是空的
-     * B.此 URL 是曾经失败过的 URL，并且不允许重新请求曾经失败的 URL
+     * 若出现以下两种情况就不再往下走了：
+     * ① URL 是空的
+     * ② 此 URL 是曾经请求失败的 URL，并且规定不允许重新请求曾经失败的 URL
      */
     if (url.absoluteString.length == 0 || (!(options & SDWebImageRetryFailed) && isFailedUrl)) {
         [self callCompletionBlockForOperation:operation completion:completedBlock error:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil] url:url];

@@ -15,6 +15,8 @@ static char loadOperationKey;
 // we should use lock to keep thread-safe because these method may not be acessed from main queue
 typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
 
+// 为什么使用 NSMapTable，不使用 NSDictionary ？？？？
+
 @implementation UIView (WebCacheOperation)
 
 - (SDOperationsDictionary *)sd_operationDictionary {
@@ -30,8 +32,11 @@ typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
 }
 
 - (void)sd_setImageLoadOperation:(nullable id<SDWebImageOperation>)operation forKey:(nullable NSString *)key {
+    
     if (key) {
+        
         [self sd_cancelImageLoadOperationWithKey:key];
+        
         if (operation) {
             SDOperationsDictionary *operationDictionary = [self sd_operationDictionary];
             @synchronized (self) {
