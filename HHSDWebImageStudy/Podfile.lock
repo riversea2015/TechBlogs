@@ -30,6 +30,8 @@ PODS:
   - SDWebImage/GIF (4.4.2):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
+  - SDWebImage/MapKit (4.4.2):
+    - SDWebImage/Core
   - SDWebImage/WebP (4.4.2):
     - libwebp (~> 0.5)
     - SDWebImage/Core
@@ -37,6 +39,7 @@ PODS:
 DEPENDENCIES:
   - SDWebImage (= 4.4.2)
   - SDWebImage/GIF
+  - SDWebImage/MapKit
   - SDWebImage/WebP
 
 SPEC REPOS:
@@ -50,6 +53,6 @@ SPEC CHECKSUMS:
   libwebp: 0f01098c6c17175391af621b2f14150f3ca16e16
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
 
-PODFILE CHECKSUM: dbe8949aea4a55d60f342c819119fa33bc208f1f
+PODFILE CHECKSUM: 15fd9a79bd5c07c2e035f0aefc37244ca976ddf0
 
 COCOAPODS: 1.5.3

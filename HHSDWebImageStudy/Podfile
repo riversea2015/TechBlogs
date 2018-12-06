@@ -8,5 +8,6 @@ target 'HHSDWebImageStudy' do
 pod 'SDWebImage', '4.4.2'
 pod 'SDWebImage/WebP'
 pod 'SDWebImage/GIF'
+pod 'SDWebImage/MapKit'
 
 end
