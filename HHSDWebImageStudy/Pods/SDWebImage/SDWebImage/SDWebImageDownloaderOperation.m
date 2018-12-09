@@ -89,12 +89,19 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
 
 - (nullable id)addHandlersForProgress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
                             completed:(nullable SDWebImageDownloaderCompletedBlock)completedBlock {
+    
     SDCallbacksDictionary *callbacks = [NSMutableDictionary new];
+    
     if (progressBlock) callbacks[kProgressCallbackKey] = [progressBlock copy];
+    
     if (completedBlock) callbacks[kCompletedCallbackKey] = [completedBlock copy];
+    
     LOCK(self.callbacksLock);
+    
     [self.callbackBlocks addObject:callbacks];
+    
     UNLOCK(self.callbacksLock);
+    
     return callbacks;
 }
 
@@ -112,15 +119,22 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
 
 - (BOOL)cancel:(nullable id)token {
     BOOL shouldCancel = NO;
+    
     LOCK(self.callbacksLock);
+    
+    // Removes all occurrences of a given object in the array.
     [self.callbackBlocks removeObjectIdenticalTo:token];
+    
     if (self.callbackBlocks.count == 0) {
         shouldCancel = YES;
     }
+    
     UNLOCK(self.callbacksLock);
+    
     if (shouldCancel) {
         [self cancel];
     }
+    
     return shouldCancel;
 }
 

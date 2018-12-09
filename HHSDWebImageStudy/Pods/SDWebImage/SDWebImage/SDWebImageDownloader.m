@@ -352,6 +352,7 @@
     
     UNLOCK(self.operationsLock);
 
+    // 存放进度和完成回调的 数组 array
     id downloadOperationCancelToken = [operation addHandlersForProgress:progressBlock completed:completedBlock];
     
     // A token associated with each download. Can be used to cancel a download
