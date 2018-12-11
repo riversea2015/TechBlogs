@@ -86,6 +86,8 @@ typedef NSMutableDictionary<NSString *, NSString *> SDHTTPHeadersMutableDictiona
 
 typedef SDHTTPHeadersDictionary * _Nullable (^SDWebImageDownloaderHeadersFilterBlock)(NSURL * _Nullable url, SDHTTPHeadersDictionary * _Nullable headers);
 
+#pragma mark - ********************************************************** SDWebImageDownloadToken
+
 /**
  *  A token associated with each download. Can be used to cancel a download
  */
@@ -103,6 +105,7 @@ typedef SDHTTPHeadersDictionary * _Nullable (^SDWebImageDownloaderHeadersFilterB
 
 @end
 
+#pragma mark - ********************************************************** SDWebImageDownloader
 
 /**
  * Asynchronous downloader dedicated and optimized for image loading.

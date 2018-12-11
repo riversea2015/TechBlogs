@@ -49,6 +49,8 @@
 
 @implementation SDWebImageDownloader
 
+#pragma mark - 创建及初始化
+
 + (void)initialize {
     // Bind SDNetworkActivityIndicator if available (download it here: http://github.com/rs/SDNetworkActivityIndicator )
     // To use it, just add #import "SDNetworkActivityIndicator.h" in addition to the SDWebImage import
@@ -87,23 +89,31 @@
 
 - (nonnull instancetype)initWithSessionConfiguration:(nullable NSURLSessionConfiguration *)sessionConfiguration {
     if ((self = [super init])) {
+        // 执行下载任务的 operation
         _operationClass = [SDWebImageDownloaderOperation class];
+        // 要求解压图片
         _shouldDecompressImages = YES;
+        // 执行顺序，先进先出
         _executionOrder = SDWebImageDownloaderFIFOExecutionOrder;
         
-        // 由于最大并发数是 6，所以此 queue 是 并发队列，如果是 1，则为串行队列。
+        // 设置下载操作的队列，由于最大并发数是 6，所以此 queue 是 并发队列，如果是 1，则为串行队列。
         _downloadQueue = [NSOperationQueue new];
         _downloadQueue.maxConcurrentOperationCount = 6;
         _downloadQueue.name = @"com.hackemist.SDWebImageDownloader";
         
         _URLOperations = [NSMutableDictionary new];
+        
+        // 请求头的字段，可接受的文件类型
 #ifdef SD_WEBP
         _HTTPHeaders = [@{@"Accept": @"image/webp,image/*;q=0.8"} mutableCopy];
 #else
         _HTTPHeaders = [@{@"Accept": @"image/*;q=0.8"} mutableCopy];
 #endif
+        
+        // 锁，这里使用了信号量
         _operationsLock = dispatch_semaphore_create(1);
         _headersLock = dispatch_semaphore_create(1);
+        // 超时时间
         _downloadTimeout = 15.0;
 
         [self createNewSessionWithConfiguration:sessionConfiguration];
@@ -111,7 +121,9 @@
     return self;
 }
 
+// 创建新的 session
 - (void)createNewSessionWithConfiguration:(NSURLSessionConfiguration *)sessionConfiguration {
+    // 为避免影响，先取消可能存在的下载任务
     [self cancelAllDownloads];
 
     // cancel 之前的 session，然后创建一个新的
@@ -124,12 +136,15 @@
     /**
      *  Create the session for this task
      *  We send nil as delegate queue so that the session creates a serial operation queue for performing all delegate
-     *  method calls and completion handler calls.
+     *  method calls and completion handler calls.///
+     @property (nonatomic, assign) <#className#> <#inatanceName#>;
      */
     self.session = [NSURLSession sessionWithConfiguration:sessionConfiguration
                                                  delegate:self
                                             delegateQueue:nil];
 }
+
+#pragma mark -
 
 - (void)invalidateSessionAndCancel:(BOOL)cancelPendingOperations {
     if (self == [SDWebImageDownloader sharedDownloader]) {
@@ -211,6 +226,8 @@
             timeoutInterval = 15.0;
         }
 
+        // *** 1.创建 request。
+        
         // 为避免重复缓存，如果没有明确要求使用 NSURLCache，我们默认忽略本地缓存
         // In order to prevent from potential duplicate caching (NSURLCache + SDImageCache) we disable the cache for image requests if told otherwise
         NSURLRequestCachePolicy cachePolicy = options & SDWebImageDownloaderUseNSURLCache ? NSURLRequestUseProtocolCachePolicy : NSURLRequestReloadIgnoringLocalCacheData;
@@ -228,22 +245,20 @@
             request.allHTTPHeaderFields = [sself allHTTPHeaderFields];
         }
         
-// *** 创建 downloader operation
-// 补充1：Request 是用来构建参数的，它并不能发起请求
-// 补充2：这个 operationClass ，给他赋什么值，他就是什么，如果不设置，就是 [SDWebImageDownloaderOperation class]
+        // *** 2.创建并设置下载的 operation。(这个 operationClass ，给他赋什么值，他就是什么，如果不设置，就是默认值：[SDWebImageDownloaderOperation class])
+        
         SDWebImageDownloaderOperation *operation = [[sself.operationClass alloc] initWithRequest:request
                                                                                        inSession:sself.session
                                                                                          options:options];
         
         operation.shouldDecompressImages = sself.shouldDecompressImages;
         
-        /*
-         ** NSURLCredential 身份认证 **
-         */
+        // NSURLCredential 身份认证
         if (sself.urlCredential) {
             operation.credential = sself.urlCredential;
         } else if (sself.username && sself.password) {
-            operation.credential = [NSURLCredential credentialWithUser:sself.username password:sself.password persistence:NSURLCredentialPersistenceForSession]; // NSURLCredentialPersistenceForSession:Credential should be stored only for this session.
+            // NSURLCredentialPersistenceForSession: Credential should be stored only for this session.
+            operation.credential = [NSURLCredential credentialWithUser:sself.username password:sself.password persistence:NSURLCredentialPersistenceForSession];
         }
         
         // 设置优先级
@@ -255,7 +270,6 @@
         
         // 更改执行顺序：先进后出(可在此设置) or 先进先出(默认)
         if (sself.executionOrder == SDWebImageDownloaderLIFOExecutionOrder) {
-            // Emulate LIFO execution order by systematically adding new operations as last operation's dependency
             // 通过反向设置依赖，指定了队列中任务的执行顺序先加进去的依赖于后加进去的，那就成了后进先出了😎
             [sself.lastAddedOperation addDependency:operation];
             sself.lastAddedOperation = operation;

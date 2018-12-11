@@ -13,6 +13,8 @@
 
 @implementation UIImageView (WebCache)
 
+#pragma mark -
+
 - (void)sd_setImageWithURL:(nullable NSURL *)url {
     [self sd_setImageWithURL:url placeholderImage:nil options:0 progress:nil completed:nil];
 }
@@ -63,7 +65,7 @@
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
     UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:key];
     
-    // 2.调用核心方法
+    // 2.调用本类中的 ‘*** 核心方法’
     [self sd_setImageWithURL:url
             placeholderImage:lastPreviousCachedImage ?: placeholder
                      options:options
@@ -76,7 +78,9 @@
 #pragma mark - Animation of multiple images
 
 - (void)sd_setAnimationImagesWithURLs:(nonnull NSArray<NSURL *> *)arrayOfURLs {
+    
     [self sd_cancelCurrentAnimationImagesLoad];
+    
     NSPointerArray *operationsArray = [self sd_animationOperationArray];
     
     [arrayOfURLs enumerateObjectsUsingBlock:^(NSURL *logoImageURL, NSUInteger idx, BOOL * _Nonnull stop) {

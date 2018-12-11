@@ -243,7 +243,7 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
     }
 
 #if SD_UIKIT
-    // *** 对应前边开启后台任务，操作完成后，结束后台任务。
+    // 结束后台任务
     Class UIApplicationClass = NSClassFromString(@"UIApplication");
     if(!UIApplicationClass || ![UIApplicationClass respondsToSelector:@selector(sharedApplication)]) {
         return;
@@ -267,6 +267,7 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
     [super cancel];
 
     if (self.dataTask) {
+        // 取消下载任务，并发出停止的通知
         [self.dataTask cancel];
         __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{

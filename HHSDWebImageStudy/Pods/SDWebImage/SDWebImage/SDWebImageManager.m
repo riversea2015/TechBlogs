@@ -204,7 +204,14 @@
             return;
         }
         
-        // 2.判断是否需要下载，3 个条件需要同时满足：①没要求只能从缓存获取数据，即当缓存找不到时，可以去下载；②找不到缓存 或 要求必须更新缓存；③
+       /**
+        *  2.判断是否需要从网络下载图片，3 个条件需要同时满足：
+        *
+        *  a.没有设置 SDWebImageFromCacheOnly，则按照默认操作，即查询不到缓存的时候，从网络获取图片
+        *  b.没有缓存 或 设置了需要更新缓存
+        *  c.如果代理未实现 “决定是否下载指定图片的代理方法” 或者 该代理方法返回 YES(即决定下载指定图片)
+        */
+
         BOOL shouldDownload = (!(options & SDWebImageFromCacheOnly)) // 没要求必须从缓存取 image 数据
             && (!cachedImage || options & SDWebImageRefreshCached) // 本地无缓存 或 需要更新缓存
         && (![self.delegate respondsToSelector:@selector(imageManager:shouldDownloadImageForURL:)] || [self.delegate imageManager:self shouldDownloadImageForURL:url]); // "imageManager:shouldDownloadImageForURL:": Return NO to prevent the downloading of the image on cache misses. If not implemented, YES is implied.

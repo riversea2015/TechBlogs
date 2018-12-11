@@ -22,20 +22,20 @@ FOUNDATION_EXPORT NSString * _Nonnull const SDWebImageDownloadFinishNotification
  For the description about these methods, see `SDWebImageDownloaderOperation`
  */
 @protocol SDWebImageDownloaderOperationInterface<NSObject>
-
+// 初始化方法
 - (nonnull instancetype)initWithRequest:(nullable NSURLRequest *)request
                               inSession:(nullable NSURLSession *)session
                                 options:(SDWebImageDownloaderOptions)options;
-
+// 保存进度和完成的回调
 - (nullable id)addHandlersForProgress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
                             completed:(nullable SDWebImageDownloaderCompletedBlock)completedBlock;
-
+// 是否需要解压图片
 - (BOOL)shouldDecompressImages;
 - (void)setShouldDecompressImages:(BOOL)value;
-
+// 凭证或称证书信息
 - (nullable NSURLCredential *)credential;
 - (void)setCredential:(nullable NSURLCredential *)value;
-
+// 取消
 - (BOOL)cancel:(nullable id)token;
 
 @end
