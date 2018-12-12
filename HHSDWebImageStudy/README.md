@@ -12,6 +12,7 @@ SDWebImage 源码学习笔记
 - [SDWebImage源码学习笔记 ☞ 结构及基本流程](https://www.jianshu.com/p/99c9564043d2)
 - [SDWebImage源码学习笔记 ☞ SDWebImageManager](https://www.jianshu.com/p/221b335cc760)
 - [SDWebImage源码学习笔记 ☞ SDWebImageDownloader](https://www.jianshu.com/p/06071cba3404)
+- [SDWebImage源码学习笔记 ☞ SDImageCache](https://www.jianshu.com/p/e3f4a7f57899)
 
 ### 备注
 
