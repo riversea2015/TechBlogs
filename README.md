@@ -6,9 +6,7 @@
 
   这个仓库是 [简书](https://www.jianshu.com/u/71f817a3a70b) 上的 [个人博客](https://www.jianshu.com/u/71f817a3a70b) 中相关代码的集合。
 
-### 详情
-
-  目前已添加代码的相关博客如下：
+### 相关博客汇总
   
 《AFNetworking 源码学习笔记》 5 篇：
 
