@@ -442,6 +442,7 @@
     return operation;
 }
 
+// 保存图片至磁盘
 - (void)saveImageToCache:(nullable UIImage *)image forURL:(nullable NSURL *)url {
     if (image && url) {
         NSString *key = [self cacheKeyForURL:url];
@@ -449,6 +450,7 @@
     }
 }
 
+// 取消所有操作
 - (void)cancelAll {
     LOCK(self.runningOperationsLock);
     NSSet<SDWebImageCombinedOperation *> *copiedOperations = [self.runningOperations copy];
@@ -456,6 +458,7 @@
     [copiedOperations makeObjectsPerformSelector:@selector(cancel)]; // This will call `safelyRemoveOperationFromRunning:` and remove from the array
 }
 
+// 判断是否还有 operation 在运行
 - (BOOL)isRunning {
     BOOL isRunning = NO;
     LOCK(self.runningOperationsLock);
@@ -464,6 +467,7 @@
     return isRunning;
 }
 
+// 从 self.runningOperations 中移除 operation，比如下载完成的时候
 - (void)safelyRemoveOperationFromRunning:(nullable SDWebImageCombinedOperation*)operation {
     if (!operation) {
         return;
@@ -473,6 +477,7 @@
     UNLOCK(self.runningOperationsLock);
 }
 
+// 执行完成的回调
 - (void)callCompletionBlockForOperation:(nullable SDWebImageCombinedOperation*)operation
                              completion:(nullable SDInternalCompletionBlock)completionBlock
                                   error:(nullable NSError *)error

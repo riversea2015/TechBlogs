@@ -22,6 +22,9 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 #endif
 }
 
+#pragma mark - ************************************************************************************* SDMemoryCache
+
+// 当收到内存警告的时候会自动清除内存缓存
 // A memory cache which auto purge the cache on memory warning and support weak cache.
 @interface SDMemoryCache <KeyType, ObjectType> : NSCache <KeyType, ObjectType>
 
@@ -31,7 +34,9 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 @interface SDMemoryCache <KeyType, ObjectType> ()
 
 @property (nonatomic, strong, nonnull) SDImageCacheConfig *config;
+
 @property (nonatomic, strong, nonnull) NSMapTable<KeyType, ObjectType> *weakCache; // strong-weak cache
+
 @property (nonatomic, strong, nonnull) dispatch_semaphore_t weakCacheLock; // a lock to keep the access to `weakCache` thread-safe
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -44,10 +49,6 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 // Current this seems no use on macOS (macOS use virtual memory and do not clear cache when memory warning). So we only override on iOS/tvOS platform.
 // But in the future there may be more options and features for this subclass.
 #if SD_UIKIT
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-}
 
 - (instancetype)initWithConfig:(SDImageCacheConfig *)config {
     self = [super init];
@@ -71,12 +72,23 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
 - (void)didReceiveMemoryWarning:(NSNotification *)notification {
     // Only remove cache, but keep weak cache
+    // 注意：此处是调用的 suoper 方法，所以并没有移除 weak cache，如果是调用 self 重写的 removeAllObjects 方法，就会移除 weak cache。
     [super removeAllObjects];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidReceiveMemoryWarningNotification
+                                                  object:nil];
+}
+
+#pragma mark -
+
 // `setObject:forKey:` just call this with 0 cost. Override this is enough
 - (void)setObject:(id)obj forKey:(id)key cost:(NSUInteger)g {
+    
     [super setObject:obj forKey:key cost:g];
+    
     if (!self.config.shouldUseWeakMemoryCache) {
         return;
     }
@@ -89,10 +101,13 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 }
 
 - (id)objectForKey:(id)key {
+    
     id obj = [super objectForKey:key];
     if (!self.config.shouldUseWeakMemoryCache) {
         return obj;
     }
+    
+    // 如果 NSCache 里边没有，而 weak cache 里边有，则将 weak cache 中的同步到 NSCache 里边
     if (key && !obj) {
         // Check weak cache
         LOCK(self.weakCacheLock);
@@ -128,7 +143,9 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     if (!self.config.shouldUseWeakMemoryCache) {
         return;
     }
+    
     // Manually remove should also remove weak cache
+    // 手动移除会清除掉 weak cache
     LOCK(self.weakCacheLock);
     [self.weakCache removeAllObjects];
     UNLOCK(self.weakCacheLock);
@@ -144,6 +161,8 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 #endif
 
 @end
+
+#pragma mark - ************************************************************************************* SDImageCache
 
 @interface SDImageCache ()
 
@@ -195,7 +214,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
         // Init the disk cache
         if (directory != nil) {
-            _diskCachePath = [directory stringByAppendingPathComponent:fullNamespace];
+            _diskCachePath = [directory stringByAppendingPathComponent:fullNamespace]; // ..../com.hackemist.SDWebImageCache.default
         } else {
             NSString *path = [self makeDiskCachePath:ns];
             _diskCachePath = path;
@@ -205,13 +224,14 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
             self.fileManager = [NSFileManager new];
         });
 
+        // 清除过期缓存
 #if SD_UIKIT
-        // Subscribe to app events
+        // App 即将关闭的时候
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(deleteOldFiles)
                                                      name:UIApplicationWillTerminateNotification
                                                    object:nil];
-
+        // App 即将进入后台的时候
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(backgroundDeleteOldFiles)
                                                      name:UIApplicationDidEnterBackgroundNotification
@@ -441,12 +461,15 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 }
 
 - (nullable NSData *)diskImageDataBySearchingAllPathsForKey:(nullable NSString *)key {
+    
+    // 1.尝试 通过默认路径查询磁盘缓存
     NSString *defaultPath = [self defaultCachePathForKey:key];
     NSData *data = [NSData dataWithContentsOfFile:defaultPath options:self.config.diskCacheReadingOptions error:nil];
     if (data) {
         return data;
     }
 
+    // 2.异常情况的处理：更换了路径再取一次，新路径是将默认路径的后缀去掉 (如果有的话)
     // fallback because of https://github.com/rs/SDWebImage/pull/976 that added the extension to the disk file name
     // checking the key with and without the extension
     data = [NSData dataWithContentsOfFile:defaultPath.stringByDeletingPathExtension options:self.config.diskCacheReadingOptions error:nil];
@@ -454,6 +477,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         return data;
     }
 
+    // 3.遍历所有用户自定义的路径，执行类似 1、2 的操作，查询磁盘缓存
     NSArray<NSString *> *customPaths = [self.customPaths copy];
     for (NSString *path in customPaths) {
         NSString *filePath = [self cachePathForKey:key inPath:path];
@@ -469,7 +493,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
             return imageData;
         }
     }
-
+    // 没查到的话，返回 nil
     return nil;
 }
 
@@ -513,14 +537,16 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     return [self queryCacheOperationForKey:key options:0 done:doneBlock];
 }
 
-// *** 先获取缓存
-// *** 如果是从 memory 取的，不需要解压，因为已经是解压过的
-// *** 如果是从 disc 取的，需要解压(解压工作是在 queryCacheOperationForKey: 方法里做的)
+/**
+ * 先获取缓存
+ * 如果是从 memory 取的，不需要解压，因为已经是解压过的
+ * 如果是从 disc 取的，需要解压(解压工作是在 queryCacheOperationForKey: 方法里做的)
+ */
 - (nullable NSOperation *)queryCacheOperationForKey:(nullable NSString *)key
                                             options:(SDImageCacheOptions)options
                                                done:(nullable SDCacheQueryCompletedBlock)doneBlock
 {
-    
+    // 1.校验参数 --- 如果 key 不存在，直接 doneBlock，返回 nil
     if (!key) {
         if (doneBlock) {
             doneBlock(nil, nil, SDImageCacheTypeNone);
@@ -528,7 +554,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         return nil;
     }
     
-    // First check the in-memory cache...
+    // 2.首先检查内存缓存 NSCache --- 如果内存中有，并且没有强制要求必须查询磁盘，则 执行 doneBlock，将 image 返回。
     UIImage *image = [self imageFromMemoryCacheForKey:key];
     BOOL shouldQueryMemoryOnly = (image && !(options & SDImageCacheQueryDataWhenInMemory));
     if (shouldQueryMemoryOnly) {
@@ -540,11 +566,11 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     
     NSOperation *operation = [NSOperation new];
     
-// *** 将获取缓存及解压的(耗时)操作封装成一个block，是为了最后执行异步操作的方便😎
-    
+    // 3.将获取缓存及解压的 ‘耗时’ 操作封装成一个 block --- 这是为了最后执行异步操作的方便😎
     void(^queryDiskBlock)(void) =  ^{
+        
+        // 如果已经取消，不作任何处理，直接返回。
         if (operation.isCancelled) {
-            // do not call the completion if cancelled
             return;
         }
         
@@ -556,40 +582,36 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
             
             if (image) {
                 
-                // A > 从memery取的
-                // the image is from in-memory cache
+                // A > 从 memery 取的
+
                 diskImage = image;
                 cacheType = SDImageCacheTypeMemory;
                 
             } else if (diskData) {
                 
-                // B > 从disc取的
-                // 如果没有从内存取到，直接从disc取的，需要解压
-                // decode image data only if in-memory cache missed
+                // B > 如果内存没有，但是从 disc 取到了，需要解压
+                
                 diskImage = [self diskImageForKey:key data:diskData options:options];
                 
-                if (diskImage && self.config.shouldCacheImagesInMemory) {
-                    NSUInteger cost = SDCacheCostForImage(diskImage);
+                if (diskImage && self.config.shouldCacheImagesInMemory) { // 缓存到内存
+                    NSUInteger cost = SDCacheCostForImage(diskImage); // 计算大小
                     [self.memCache setObject:diskImage forKey:key cost:cost];
                 }
             }
             
             if (doneBlock) {
-                if (options & SDImageCacheQueryDiskSync) {
+                if (options & SDImageCacheQueryDiskSync) {  // 同步执行完成回调
                     doneBlock(diskImage, diskData, cacheType);
-                } else {
+                } else {                                    // 异步执行完成回调
                     dispatch_async(dispatch_get_main_queue(), ^{
                         doneBlock(diskImage, diskData, cacheType);
                     });
                 }
             }
-            
         }
-        
     };
     
-// *** 如果明确要求同步执行，则同步，否则，默认是异步执行磁盘查询的操作的
-    
+    // 4.执行查询磁盘缓存的 block --- 如果明确要求同步执行，则同步；否则，默认是异步执行 `磁盘查询` 的操作。
     if (options & SDImageCacheQueryDiskSync) {
         queryDiskBlock();
     } else {
