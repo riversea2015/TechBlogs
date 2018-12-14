@@ -7,6 +7,7 @@
 //
 
 #import "HHViewController.h"
+#import <MJRefresh/MJRefresh.h>
 
 static NSString * const cellID = @"UITableViewCell";
 
@@ -23,6 +24,8 @@ UITableViewDelegate
 
 @implementation HHViewController
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -30,6 +33,8 @@ UITableViewDelegate
     
     [self.view addSubview:self.tableView];
 }
+
+
 
 #pragma mark - delegate & dataSource
 
