@@ -74,6 +74,7 @@ typedef void (^MBProgressHUDCompletionBlock)(void);
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - ************************************************************************************* MBProgressHUD
 
 /** 
  * Displays a simple HUD window containing a progress indicator and two optional labels for short messages.
@@ -304,6 +305,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - ************************************************************************************* MBProgressHUDDelegate
 
 @protocol MBProgressHUDDelegate <NSObject>
 
@@ -316,6 +318,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - ************************************************************************************* MBRoundProgressView
 
 /**
  * A progress view for showing definite progress by filling up a circle (pie chart).
@@ -347,6 +350,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - ************************************************************************************* MBBarProgressView
 
 /**
  * A flat bar progress view. 
@@ -357,7 +361,6 @@ NS_ASSUME_NONNULL_BEGIN
  * Progress (0.0 to 1.0)
  */
 @property (nonatomic, assign) float progress;
-
 /**
  * Bar border line color.
  * Defaults to white [UIColor whiteColor].
@@ -378,6 +381,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - ************************************************************************************* MBBackgroundView
 
 @interface MBBackgroundView : UIView
 
@@ -403,6 +407,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *color;
 
 @end
+
+#pragma mark - ************************************************************************************* 已废弃 Deprecated
 
 @interface MBProgressHUD (Deprecated)
 

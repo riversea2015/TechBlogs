@@ -33,15 +33,20 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 
 @property (nonatomic, assign) BOOL useAnimation;
 @property (nonatomic, assign, getter=hasFinished) BOOL finished;
+
 @property (nonatomic, strong) UIView *indicator;
+
 @property (nonatomic, strong) NSDate *showStarted;
 @property (nonatomic, strong) NSArray *paddingConstraints;
 @property (nonatomic, strong) NSArray *bezelConstraints;
+
 @property (nonatomic, strong) UIView *topSpacer;
 @property (nonatomic, strong) UIView *bottomSpacer;
-@property (nonatomic, weak) NSTimer *graceTimer;
-@property (nonatomic, weak) NSTimer *minShowTimer;
-@property (nonatomic, weak) NSTimer *hideDelayTimer;
+
+@property (nonatomic, weak) NSTimer *graceTimer;        // 显示 的 宽限时间 对应的 timer
+@property (nonatomic, weak) NSTimer *minShowTimer;      // HUD 的最短显示维持时间 的timer
+@property (nonatomic, weak) NSTimer *hideDelayTimer;    // 隐藏 的 宽限时间 对应的 timer
+
 @property (nonatomic, weak) CADisplayLink *progressObjectDisplayLink;
 
 // Deprecated
@@ -141,18 +146,26 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 #pragma mark - Show & hide
 
 - (void)showAnimated:(BOOL)animated {
+    
+    // 使用 NSAsset，如果当前线程不是主线程，就会报错
     MBMainThreadAssert();
+    
+    // 关闭之前的 minShowTimer
     [self.minShowTimer invalidate];
+    
     self.useAnimation = animated;
     self.finished = NO;
-    // If the grace time is set, postpone the HUD display
+    
+    // 如果设置了 graceTime，则延缓 HUD 的展示
     if (self.graceTime > 0.0) {
+        
         NSTimer *timer = [NSTimer timerWithTimeInterval:self.graceTime target:self selector:@selector(handleGraceTimer:) userInfo:nil repeats:NO];
         [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         self.graceTimer = timer;
-    } 
-    // ... otherwise show the HUD immediately
-    else {
+        
+    } else {
+        
+        // 如果没设置 graceTime，则立即展示 HUD
         [self showUsingAnimation:self.useAnimation];
     }
 }
@@ -212,6 +225,7 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 #pragma mark - Internal show & hide operations
 
 - (void)showUsingAnimation:(BOOL)animated {
+    
     // Cancel any previous animations
     [self.bezelView.layer removeAllAnimations];
     [self.backgroundView.layer removeAllAnimations];
@@ -371,6 +385,7 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
     topSpacer.translatesAutoresizingMaskIntoConstraints = NO;
     topSpacer.hidden = YES;
     [bezelView addSubview:topSpacer];
+    topSpacer.backgroundColor = [UIColor redColor];
     _topSpacer = topSpacer;
 
     UIView *bottomSpacer = [UIView new];
