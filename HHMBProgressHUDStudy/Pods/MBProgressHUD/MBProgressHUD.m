@@ -171,7 +171,9 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 }
 
 - (void)hideAnimated:(BOOL)animated {
+    
     MBMainThreadAssert();
+    
     [self.graceTimer invalidate];
     self.useAnimation = animated;
     self.finished = YES;
@@ -265,31 +267,38 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 }
 
 - (void)animateIn:(BOOL)animatingIn withType:(MBProgressHUDAnimation)type completion:(void(^)(BOOL finished))completion {
-    // Automatically determine the correct zoom animation type
+    
+    // 确定缩放动画的类型
     if (type == MBProgressHUDAnimationZoom) {
         type = animatingIn ? MBProgressHUDAnimationZoomIn : MBProgressHUDAnimationZoomOut;
     }
 
-    CGAffineTransform small = CGAffineTransformMakeScale(0.5f, 0.5f);
-    CGAffineTransform large = CGAffineTransformMakeScale(1.5f, 1.5f);
-
-    // Set starting state
+    CGAffineTransform small = CGAffineTransformMakeScale(0.5f, 0.5f); // x、y 方向的缩放倍数均为 0.5
+    CGAffineTransform large = CGAffineTransformMakeScale(1.5f, 1.5f); // x、y 方向的缩放倍数均为 1.5
+    
     UIView *bezelView = self.bezelView;
+    
+// * 设置初始状态的值（show 的 过渡动画 的初值，hide 的初值就不用设置了）
     if (animatingIn && bezelView.alpha == 0.f && type == MBProgressHUDAnimationZoomIn) {
         bezelView.transform = small;
     } else if (animatingIn && bezelView.alpha == 0.f && type == MBProgressHUDAnimationZoomOut) {
         bezelView.transform = large;
     }
 
-    // Perform animations
+    // 执行动画的 block，作为后边方法的参数
     dispatch_block_t animations = ^{
+        
+// * show 的过渡动画 的 终值
         if (animatingIn) {
             bezelView.transform = CGAffineTransformIdentity;
+            
+// * 下边 2 个 if 均为 hide 的过渡动画 的 终值
         } else if (!animatingIn && type == MBProgressHUDAnimationZoomIn) {
             bezelView.transform = large;
         } else if (!animatingIn && type == MBProgressHUDAnimationZoomOut) {
             bezelView.transform = small;
         }
+        
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         bezelView.alpha = animatingIn ? self.opacity : 0.f;
@@ -297,14 +306,26 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
         self.backgroundView.alpha = animatingIn ? 1.f : 0.f;
     };
 
-    // Spring animations are nicer, but only available on iOS 7+
+    // 此方法 iOS 7.0 之后才支持
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000 || TARGET_OS_TV
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
-        [UIView animateWithDuration:0.3 delay:0. usingSpringWithDamping:1.f initialSpringVelocity:0.f options:UIViewAnimationOptionBeginFromCurrentState animations:animations completion:completion];
+        [UIView animateWithDuration:0.3
+                              delay:0.
+             usingSpringWithDamping:1.f
+              initialSpringVelocity:0.f
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:animations
+                         completion:completion];
         return;
     }
 #endif
-    [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionBeginFromCurrentState animations:animations completion:completion];
+    
+    // iOS 4.0 就开始支持
+    [UIView animateWithDuration:0.3
+                          delay:0.
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animations
+                     completion:completion];
 }
 
 - (void)done {
