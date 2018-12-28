@@ -12,6 +12,14 @@
 #import "MJRefreshFooter.h"
 #import <objc/runtime.h>
 
+#pragma mark - --------------------------------------- NSObject (MJRefresh)
+
+/**
+ *  交换方法实现：
+ *  1.交换实例方法
+ *  2.交换类方法
+ */
+
 @implementation NSObject (MJRefresh)
 
 + (void)exchangeInstanceMethod1:(SEL)method1 method2:(SEL)method2
@@ -26,7 +34,13 @@
 
 @end
 
+#pragma mark - --------------------------------------- UIScrollView (MJRefresh)
+
 @implementation UIScrollView (MJRefresh)
+
+/**
+ *  利用关联对象为基类 scrollView 添加了2个属性 mj_header 和 mj_footer。
+ */
 
 #pragma mark - header
 static const char MJRefreshHeaderKey = '\0';
@@ -89,7 +103,12 @@ static const char MJRefreshFooterKey = '\0';
     return self.mj_header;
 }
 
-#pragma mark - other
+#pragma mark - 交换方法后新增的 block 的相关方法
+
+/**
+ *  列表 (tableView/collectionView) 的总行数 numbersOfSection x rowsPerSection
+ */
+
 - (NSInteger)mj_totalDataCount
 {
     NSInteger totalCount = 0;
@@ -109,6 +128,8 @@ static const char MJRefreshFooterKey = '\0';
     return totalCount;
 }
 
+/// mj_reloadDataBlock 的 setter。
+/// 查了一下，只有当给列表添加 footer 的时候才会设置这个 block，内容是 当列表行数为 0 时，隐藏 footer。
 static const char MJRefreshReloadDataBlockKey = '\0';
 - (void)setMj_reloadDataBlock:(void (^)(NSInteger))mj_reloadDataBlock
 {
@@ -117,21 +138,31 @@ static const char MJRefreshReloadDataBlockKey = '\0';
     [self didChangeValueForKey:@"mj_reloadDataBlock"]; // KVO
 }
 
+/// mj_reloadDataBlock 的 getter
 - (void (^)(NSInteger))mj_reloadDataBlock
 {
     return objc_getAssociatedObject(self, &MJRefreshReloadDataBlockKey);
 }
 
+/// reloadData 的时候执行此 block（由交换方法可以看出来）
 - (void)executeReloadDataBlock
 {
     !self.mj_reloadDataBlock ? : self.mj_reloadDataBlock(self.mj_totalDataCount);
 }
+
 @end
+
+#pragma mark - --------------------------------------- UITableView (MJRefresh)
+
+/**
+ *  交换方法，增加执行 block
+ */
 
 @implementation UITableView (MJRefresh)
 
 + (void)load
 {
+    // 将 tableView 的系统方法 reloadData 与 自定义的 mj_reloadData 交换，在后者中增加了 一个 block 的调用（在基类 UIScrollView 的分类里边）
     [self exchangeInstanceMethod1:@selector(reloadData) method2:@selector(mj_reloadData)];
 }
 
@@ -142,6 +173,12 @@ static const char MJRefreshReloadDataBlockKey = '\0';
     [self executeReloadDataBlock];
 }
 @end
+
+#pragma mark - --------------------------------------- UICollectionView (MJRefresh)
+
+/**
+ *  交换方法，增加执行 block
+ */
 
 @implementation UICollectionView (MJRefresh)
 

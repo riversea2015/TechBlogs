@@ -17,10 +17,14 @@
 
 static BOOL respondsToAdjustedContentInset_;
 
+#pragma mark - initialize
+
 + (void)initialize
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        // instancesRespondToSelector: 当前类的实例对象是否可以响应 adjustedContentInset 方法
+        // iOS 11 开始才有 adjustedContentInset 这个属性
         respondsToAdjustedContentInset_ = [self instancesRespondToSelector:@selector(adjustedContentInset)];
     });
 }
@@ -103,6 +107,8 @@ static BOOL respondsToAdjustedContentInset_;
     return self.mj_inset.right;
 }
 
+#pragma mark - mj_inset
+
 - (void)setMj_offsetX:(CGFloat)mj_offsetX
 {
     CGPoint offset = self.contentOffset;
@@ -126,6 +132,8 @@ static BOOL respondsToAdjustedContentInset_;
 {
     return self.contentOffset.y;
 }
+
+#pragma mark - contentSize
 
 - (void)setMj_contentW:(CGFloat)mj_contentW
 {

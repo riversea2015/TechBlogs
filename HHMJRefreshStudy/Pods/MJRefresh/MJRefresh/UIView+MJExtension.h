@@ -9,6 +9,10 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  提供了 view 的 frame 中相关值的便捷访问方式
+ */
+
 @interface UIView (MJExtension)
 @property (assign, nonatomic) CGFloat mj_x;
 @property (assign, nonatomic) CGFloat mj_y;

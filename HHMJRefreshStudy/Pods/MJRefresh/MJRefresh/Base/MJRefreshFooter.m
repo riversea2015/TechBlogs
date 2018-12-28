@@ -41,10 +41,12 @@
     self.automaticallyHidden = NO;
 }
 
+// 添加到父视图上时，newSuperview 有值，从俯视图移除时没有值
 - (void)willMoveToSuperview:(UIView *)newSuperview
 {
     [super willMoveToSuperview:newSuperview];
     
+    // 当前视图被添加到父视图上时，设置后边的 block，即当列表（UICollectionView 或 UITableView）行数为 0 时，隐藏当前视图。
     if (newSuperview) {
         // 监听scrollView数据的变化
         if ([self.scrollView isKindOfClass:[UITableView class]] || [self.scrollView isKindOfClass:[UICollectionView class]]) {

@@ -9,6 +9,10 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  调整 adjustedContentInset 和 contentInset
+ */
+
 @interface UIScrollView (MJExtension)
 @property (readonly, nonatomic) UIEdgeInsets mj_inset;
 

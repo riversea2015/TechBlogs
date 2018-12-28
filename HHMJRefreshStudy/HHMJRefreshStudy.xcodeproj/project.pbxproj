@@ -15,6 +15,8 @@
 		9210A42B21C2305100972920 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9210A42A21C2305100972920 /* main.m */; };
 		9210A43521C2305100972920 /* HHMJRefreshStudyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9210A43421C2305100972920 /* HHMJRefreshStudyTests.m */; };
 		9210A44021C2305100972920 /* HHMJRefreshStudyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9210A43F21C2305100972920 /* HHMJRefreshStudyUITests.m */; };
+		926839FC21D6309C00CB0B78 /* MJChiBaoZiFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 926839F921D6309C00CB0B78 /* MJChiBaoZiFooter.m */; };
+		926839FD21D6309C00CB0B78 /* MJChiBaoZiHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 926839FA21D6309C00CB0B78 /* MJChiBaoZiHeader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,10 @@
 		9210A43B21C2305100972920 /* HHMJRefreshStudyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HHMJRefreshStudyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9210A43F21C2305100972920 /* HHMJRefreshStudyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMJRefreshStudyUITests.m; sourceTree = "<group>"; };
 		9210A44121C2305100972920 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		926839F821D6309C00CB0B78 /* MJChiBaoZiFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJChiBaoZiFooter.h; sourceTree = "<group>"; };
+		926839F921D6309C00CB0B78 /* MJChiBaoZiFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJChiBaoZiFooter.m; sourceTree = "<group>"; };
+		926839FA21D6309C00CB0B78 /* MJChiBaoZiHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJChiBaoZiHeader.m; sourceTree = "<group>"; };
+		926839FB21D6309C00CB0B78 /* MJChiBaoZiHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJChiBaoZiHeader.h; sourceTree = "<group>"; };
 		C7E752A4EB5DE954F5107007 /* libPods-HHMJRefreshStudy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HHMJRefreshStudy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F21AE82D5F31BC17E24C0D09 /* Pods-HHMJRefreshStudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHMJRefreshStudy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HHMJRefreshStudy/Pods-HHMJRefreshStudy.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +116,10 @@
 				9210A41C21C2305000972920 /* AppDelegate.m */,
 				9210A41E21C2305000972920 /* HHViewController.h */,
 				9210A41F21C2305000972920 /* HHViewController.m */,
+				926839F821D6309C00CB0B78 /* MJChiBaoZiFooter.h */,
+				926839F921D6309C00CB0B78 /* MJChiBaoZiFooter.m */,
+				926839FB21D6309C00CB0B78 /* MJChiBaoZiHeader.h */,
+				926839FA21D6309C00CB0B78 /* MJChiBaoZiHeader.m */,
 				9210A42421C2305100972920 /* Assets.xcassets */,
 				9210A42621C2305100972920 /* LaunchScreen.storyboard */,
 				9210A42921C2305100972920 /* Info.plist */,
@@ -324,6 +334,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				926839FC21D6309C00CB0B78 /* MJChiBaoZiFooter.m in Sources */,
+				926839FD21D6309C00CB0B78 /* MJChiBaoZiHeader.m in Sources */,
 				9210A42021C2305000972920 /* HHViewController.m in Sources */,
 				9210A42B21C2305100972920 /* main.m in Sources */,
 				9210A41D21C2305000972920 /* AppDelegate.m in Sources */,

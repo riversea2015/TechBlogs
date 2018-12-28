@@ -10,7 +10,10 @@
 #import "MJRefreshComponent.h"
 #import "MJRefreshConst.h"
 
+#pragma mark - ------------------------------------------------------ MJRefreshComponent
+
 @interface MJRefreshComponent()
+/// 拖拽手势
 @property (strong, nonatomic) UIPanGestureRecognizer *pan;
 @end
 
@@ -31,6 +34,7 @@
 - (void)prepare
 {
     // 基本属性
+    /// 当父视图的 bounds 改变时，子视图即当前视图自动调整宽度，确保左、右边距不变
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.backgroundColor = [UIColor clearColor];
 }
@@ -42,7 +46,9 @@
     [super layoutSubviews];
 }
 
-- (void)placeSubviews{}
+- (void)placeSubviews{
+    
+}
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
 {
@@ -83,6 +89,18 @@
 }
 
 #pragma mark - KVO监听
+
+/**
+ *  当前控件 header or footer 监听其父控件（将自己添加到父视图上时，添加监听；从父视图移除时，移除监听。）
+ *
+ *  监听三个值：
+ *  1.scrollView 的偏移量
+ *  2.scrollView 的 contentSize
+ *  3.scrollView 的拖拽手势的状态
+ *
+ *  监听到变化后的操作留作子类去实现
+ */
+
 - (void)addObservers
 {
     NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
@@ -102,7 +120,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    // 遇到这些情况就直接返回
+    // 遇到这些情况就直接返回：不能交互
     if (!self.userInteractionEnabled) return;
     
     // 这个就算看不见也需要处理
@@ -112,6 +130,7 @@
     
     // 看不见
     if (self.hidden) return;
+    
     if ([keyPath isEqualToString:MJRefreshKeyPathContentOffset]) {
         [self scrollViewContentOffsetDidChange:change];
     } else if ([keyPath isEqualToString:MJRefreshKeyPathPanState]) {
@@ -237,6 +256,8 @@
     })
 }
 @end
+
+#pragma mark - ------------------------------------------------------ UILabel(MJRefresh)
 
 @implementation UILabel(MJRefresh)
 + (instancetype)mj_label
