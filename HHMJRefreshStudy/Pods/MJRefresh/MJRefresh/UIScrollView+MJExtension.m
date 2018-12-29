@@ -29,6 +29,8 @@ static BOOL respondsToAdjustedContentInset_;
     });
 }
 
+#pragma mark - contentInset
+
 - (UIEdgeInsets)mj_inset
 {
 #ifdef __IPHONE_11_0
@@ -107,7 +109,7 @@ static BOOL respondsToAdjustedContentInset_;
     return self.mj_inset.right;
 }
 
-#pragma mark - mj_inset
+#pragma mark - contentOffset
 
 - (void)setMj_offsetX:(CGFloat)mj_offsetX
 {

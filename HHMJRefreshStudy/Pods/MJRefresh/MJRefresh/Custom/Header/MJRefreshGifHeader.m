@@ -130,4 +130,5 @@
         [self.gifView stopAnimating];
     }
 }
+
 @end

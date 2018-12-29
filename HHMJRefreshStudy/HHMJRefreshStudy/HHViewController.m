@@ -55,7 +55,8 @@ UITableViewDelegate
     // 3.下载数据的操作
     __weak typeof(self) weakSelf = self;
     [self requestNetDataWithCompletionBlock:^(NSArray *result, BOOL isSuccess) {
-        // * 处理返回的数据
+        // * 处理数据
+        [weakSelf.dataArray removeAllObjects];
         [weakSelf.dataArray addObjectsFromArray:result];
         // 4.刷新表格，并结束刷新状态
         [weakSelf.tableView reloadData];

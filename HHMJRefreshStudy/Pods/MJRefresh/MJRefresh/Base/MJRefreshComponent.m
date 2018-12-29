@@ -159,6 +159,7 @@
 }
 
 #pragma mark 进入刷新状态
+
 - (void)beginRefreshing
 {
     [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
@@ -186,6 +187,7 @@
 }
 
 #pragma mark 结束刷新状态
+
 - (void)endRefreshing
 {
     MJRefreshDispatchAsyncOnMainQueue(self.state = MJRefreshStateIdle;)
@@ -199,12 +201,14 @@
 }
 
 #pragma mark 是否正在刷新
+
 - (BOOL)isRefreshing
 {
     return self.state == MJRefreshStateRefreshing || self.state == MJRefreshStateWillRefresh;
 }
 
 #pragma mark 自动切换透明度
+
 - (void)setAutoChangeAlpha:(BOOL)autoChangeAlpha
 {
     self.automaticallyChangeAlpha = autoChangeAlpha;
@@ -233,6 +237,8 @@
 {
     _pullingPercent = pullingPercent;
     
+    // 不是正在刷新的状态，而且要求自动改变透明度时，将 pullingPercent 的值给 alpha，否则不再往下执行。
+    
     if (self.isRefreshing) return;
     
     if (self.isAutomaticallyChangeAlpha) {
@@ -241,20 +247,25 @@
 }
 
 #pragma mark - 内部方法
+
 - (void)executeRefreshingCallback
 {
     MJRefreshDispatchAsyncOnMainQueue({
+        
         if (self.refreshingBlock) {
             self.refreshingBlock();
         }
+        
         if ([self.refreshingTarget respondsToSelector:self.refreshingAction]) {
             MJRefreshMsgSend(MJRefreshMsgTarget(self.refreshingTarget), self.refreshingAction, self);
         }
+        
         if (self.beginRefreshingCompletionBlock) {
             self.beginRefreshingCompletionBlock();
         }
     })
 }
+
 @end
 
 #pragma mark - ------------------------------------------------------ UILabel(MJRefresh)

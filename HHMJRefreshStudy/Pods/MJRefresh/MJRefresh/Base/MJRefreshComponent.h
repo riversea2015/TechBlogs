@@ -30,10 +30,15 @@ typedef NS_ENUM(NSInteger, MJRefreshState) {
 
 /** 进入刷新状态的回调 */
 typedef void (^MJRefreshComponentRefreshingBlock)(void);
+
 /** 开始刷新后的回调(进入刷新状态后的回调) */
 typedef void (^MJRefreshComponentbeginRefreshingCompletionBlock)(void);
+
 /** 结束刷新后的回调 */
 typedef void (^MJRefreshComponentEndRefreshingCompletionBlock)(void);
+
+
+#pragma mark - ---------------------------------------------- MJRefreshComponent
 
 /** 刷新控件的基类 */
 @interface MJRefreshComponent : UIView
@@ -43,43 +48,58 @@ typedef void (^MJRefreshComponentEndRefreshingCompletionBlock)(void);
     /** 父控件 */
     __weak UIScrollView *_scrollView;
 }
+
 #pragma mark - 刷新回调
+
 /** 正在刷新的回调 */
 @property (copy, nonatomic) MJRefreshComponentRefreshingBlock refreshingBlock;
+
 /** 设置回调对象和回调方法 */
 - (void)setRefreshingTarget:(id)target refreshingAction:(SEL)action;
 
 /** 回调对象 */
 @property (weak, nonatomic) id refreshingTarget;
+
 /** 回调方法 */
 @property (assign, nonatomic) SEL refreshingAction;
+
 /** 触发回调（交给子类去调用） */
 - (void)executeRefreshingCallback;
 
 #pragma mark - 刷新状态控制
+
 /** 进入刷新状态 */
 - (void)beginRefreshing;
+
 - (void)beginRefreshingWithCompletionBlock:(void (^)(void))completionBlock;
+
 /** 开始刷新后的回调(进入刷新状态后的回调) */
 @property (copy, nonatomic) MJRefreshComponentbeginRefreshingCompletionBlock beginRefreshingCompletionBlock;
+
 /** 结束刷新的回调 */
 @property (copy, nonatomic) MJRefreshComponentEndRefreshingCompletionBlock endRefreshingCompletionBlock;
+
 /** 结束刷新状态 */
 - (void)endRefreshing;
+
 - (void)endRefreshingWithCompletionBlock:(void (^)(void))completionBlock;
+
 /** 是否正在刷新 */
 @property (assign, nonatomic, readonly, getter=isRefreshing) BOOL refreshing;
-//- (BOOL)isRefreshing;
+
 /** 刷新状态 一般交给子类内部实现 */
 @property (assign, nonatomic) MJRefreshState state;
 
 #pragma mark - 交给子类去访问
+
 /** 记录scrollView刚开始的inset */
 @property (assign, nonatomic, readonly) UIEdgeInsets scrollViewOriginalInset;
+
 /** 父控件 */
 @property (weak, nonatomic, readonly) UIScrollView *scrollView;
 
 #pragma mark - 交给子类们去实现
+
 /** 初始化 */
 - (void)prepare NS_REQUIRES_SUPER;
 /** 摆放子控件frame */
@@ -93,15 +113,25 @@ typedef void (^MJRefreshComponentEndRefreshingCompletionBlock)(void);
 
 
 #pragma mark - 其他
+
 /** 拉拽的百分比(交给子类重写) */
 @property (assign, nonatomic) CGFloat pullingPercent;
+
 /** 根据拖拽比例自动切换透明度 */
 @property (assign, nonatomic, getter=isAutoChangeAlpha) BOOL autoChangeAlpha MJRefreshDeprecated("请使用automaticallyChangeAlpha属性");
+
 /** 根据拖拽比例自动切换透明度 */
 @property (assign, nonatomic, getter=isAutomaticallyChangeAlpha) BOOL automaticallyChangeAlpha;
+
 @end
 
+
+#pragma mark - ---------------------------------------------- UILabel(MJRefresh)
+
 @interface UILabel(MJRefresh)
+
 + (instancetype)mj_label;
+
 - (CGFloat)mj_textWith;
+
 @end
