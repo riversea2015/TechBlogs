@@ -9,6 +9,7 @@
 #import "MJRefreshFooter.h"
 
 @interface MJRefreshAutoFooter : MJRefreshFooter
+
 /** 是否自动刷新(默认为YES) */
 @property (assign, nonatomic, getter=isAutomaticallyRefresh) BOOL automaticallyRefresh;
 
@@ -20,4 +21,5 @@
 
 /** 是否每一次拖拽只发一次请求 */
 @property (assign, nonatomic, getter=isOnlyRefreshPerDrag) BOOL onlyRefreshPerDrag;
+
 @end

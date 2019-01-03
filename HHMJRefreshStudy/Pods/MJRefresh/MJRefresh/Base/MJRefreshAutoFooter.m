@@ -9,7 +9,7 @@
 #import "MJRefreshAutoFooter.h"
 
 @interface MJRefreshAutoFooter()
-/** 一个新的拖拽 */
+/** 是否是一个新的拖拽 */
 @property (assign, nonatomic, getter=isOneNewPan) BOOL oneNewPan;
 @end
 
@@ -75,7 +75,8 @@
     if (self.state != MJRefreshStateIdle || !self.automaticallyRefresh || self.mj_y == 0) return;
     
     if (_scrollView.mj_insetT + _scrollView.mj_contentH > _scrollView.mj_h) { // 内容超过一个屏幕
-        // 这里的_scrollView.mj_contentH替换掉self.mj_y更为合理
+        
+        // 这里的 _scrollView.mj_contentH 替换掉 self.mj_y 更为合理
         if (_scrollView.mj_offsetY >= _scrollView.mj_contentH - _scrollView.mj_h + self.mj_h * self.triggerAutomaticallyRefreshPercent + _scrollView.mj_insetB - self.mj_h) {
             // 防止手松开时连续调用
             CGPoint old = [change[@"old"] CGPointValue];
@@ -92,10 +93,13 @@
 {
     [super scrollViewPanStateDidChange:change];
     
+    // 只有 self.state == MJRefreshStateIdle 才能继续往下走
     if (self.state != MJRefreshStateIdle) return;
     
     UIGestureRecognizerState panState = _scrollView.panGestureRecognizer.state;
+    
     if (panState == UIGestureRecognizerStateEnded) {// 手松开
+        
         if (_scrollView.mj_insetT + _scrollView.mj_contentH <= _scrollView.mj_h) {  // 不够一个屏幕
             if (_scrollView.mj_offsetY >= - _scrollView.mj_insetT) { // 向上拽
                 [self beginRefreshing];
@@ -112,6 +116,7 @@
 
 - (void)beginRefreshing
 {
+    // 因为初始状态设置了 self.isOnlyRefreshPerDrag == NO，故可以继续执行
     if (!self.isOneNewPan && self.isOnlyRefreshPerDrag) return;
     
     [super beginRefreshing];
@@ -145,13 +150,17 @@
     
     [super setHidden:hidden];
     
+    // 从显示变成隐藏状态
     if (!lastHidden && hidden) {
+        
         self.state = MJRefreshStateIdle;
-        
         self.scrollView.mj_insetB -= self.mj_h;
-    } else if (lastHidden && !hidden) {
-        self.scrollView.mj_insetB += self.mj_h;
         
+    } else if (lastHidden && !hidden) {
+        
+        // 从隐藏变成显示状态
+        
+        self.scrollView.mj_insetB += self.mj_h;
         // 设置位置
         self.mj_y = _scrollView.mj_contentH;
     }
