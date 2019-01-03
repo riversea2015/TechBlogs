@@ -73,6 +73,12 @@
 - (void)resetNoMoreData
 {
     MJRefreshDispatchAsyncOnMainQueue(self.state = MJRefreshStateIdle;)
+    
+//    __weak typeof(self) weakSelf = self;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        typeof(weakSelf) self = weakSelf;
+//        self.state = MJRefreshStateIdle;
+//    });
 }
 
 - (void)setAutomaticallyHidden:(BOOL)automaticallyHidden

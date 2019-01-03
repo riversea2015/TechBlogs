@@ -77,10 +77,12 @@
 - (void)setPullingPercent:(CGFloat)pullingPercent
 {
     [super setPullingPercent:pullingPercent];
+    
     NSArray *images = self.stateImages[@(MJRefreshStateIdle)];
     if (self.state != MJRefreshStateIdle || images.count == 0) return;
     // 停止动画
     [self.gifView stopAnimating];
+    
     // 设置当前需要显示的图片
     NSUInteger index =  images.count * pullingPercent;
     if (index >= images.count) index = images.count - 1;
@@ -130,5 +132,7 @@
         [self.gifView stopAnimating];
     }
 }
+
+// 为了不至于频繁更新状态
 
 @end

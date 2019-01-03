@@ -17,6 +17,7 @@
 @end
 
 @implementation MJRefreshNormalHeader
+
 #pragma mark - 懒加载子控件
 - (UIImageView *)arrowView
 {

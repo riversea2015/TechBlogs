@@ -62,6 +62,7 @@
 }
 
 #pragma mark key的处理
+
 - (void)setLastUpdatedTimeKey:(NSString *)lastUpdatedTimeKey
 {
     [super setLastUpdatedTimeKey:lastUpdatedTimeKey];
@@ -118,8 +119,11 @@
     self.labelLeftInset = MJRefreshLabelLeftInset;
     
     // 初始化文字
+    // 初始未触发刷新的状态
     [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshHeaderIdleText] forState:MJRefreshStateIdle];
+    // 拖拽状态
     [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshHeaderPullingText] forState:MJRefreshStatePulling];
+    // 刷新状态
     [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshHeaderRefreshingText] forState:MJRefreshStateRefreshing];
 }
 
@@ -164,4 +168,5 @@
     // 重新设置key（重新显示时间）
     self.lastUpdatedTimeKey = self.lastUpdatedTimeKey;
 }
+
 @end

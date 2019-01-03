@@ -45,7 +45,7 @@
     return self.triggerAutomaticallyRefreshPercent;
 }
 
-#pragma mark - 实现父类的方法
+#pragma mark - 重写父类的方法
 - (void)prepare
 {
     [super prepare];
@@ -124,8 +124,13 @@
     MJRefreshCheckState
     
     if (state == MJRefreshStateRefreshing) {
+        
+        // 刷新状态，执行刷新的回调
         [self executeRefreshingCallback];
+        
     } else if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle) {
+        
+        // 从 刷新状态 进入 没有更多数据或者正常状态 时，如果有完成后的回调，则执行之
         if (MJRefreshStateRefreshing == oldState) {
             if (self.endRefreshingCompletionBlock) {
                 self.endRefreshingCompletionBlock();

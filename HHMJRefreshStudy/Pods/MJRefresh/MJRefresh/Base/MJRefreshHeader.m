@@ -84,6 +84,8 @@
     
     if (self.scrollView.isDragging) { // 如果正在拖拽
         self.pullingPercent = pullingPercent;
+        
+        // 为了不至于频繁调用 setState，这里不仅要考虑 offsetY 还要参考当前 state
         if (self.state == MJRefreshStateIdle && offsetY < normal2pullingOffsetY) {
             // 转为即将刷新状态
             self.state = MJRefreshStatePulling;
@@ -91,6 +93,7 @@
             // 转为普通状态
             self.state = MJRefreshStateIdle;
         }
+        
     } else if (self.state == MJRefreshStatePulling) {// 即将刷新 && 手松开
         // 开始刷新
         [self beginRefreshing];
@@ -105,32 +108,50 @@
     
     // 根据状态做事情
     if (state == MJRefreshStateIdle) {
+        
+// *** 从刷新状态恢复正常状态
+        
+        // oldState 在 MJRefreshCheckState 里边
         if (oldState != MJRefreshStateRefreshing) return;
         
         // 保存刷新时间
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:self.lastUpdatedTimeKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        // 恢复inset和offset
+        // 恢复 inset 和 offset
         [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{
+            
+            // 给初始状态的 contentInset 加上一个自身高度
             self.scrollView.mj_insetT += self.insetTDelta;
             
-            // 自动调整透明度
+            // 如果需要自动调整透明度，则透明度逐渐降为 0
             if (self.isAutomaticallyChangeAlpha) self.alpha = 0.0;
+            
         } completion:^(BOOL finished) {
+            
+            // 完成后，拖拽进度也清零
             self.pullingPercent = 0.0;
             
+            // 执行结束刷新的 block，注意，if 判断必须有，否则如果 block 不存在又直接执行的情况下，会 crash。
             if (self.endRefreshingCompletionBlock) {
                 self.endRefreshingCompletionBlock();
             }
+            
         }];
     } else if (state == MJRefreshStateRefreshing) {
+        
+// *** 进入刷新状态
+        
         MJRefreshDispatchAsyncOnMainQueue({
+            
             [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
+                
                 if (self.scrollView.panGestureRecognizer.state != UIGestureRecognizerStateCancelled) {
+                    
                     CGFloat top = self.scrollViewOriginalInset.top + self.mj_h;
-                    // 增加滚动区域top
+                    // 增加滚动区域 top，保证刷新控件悬停的位置，结束刷新时是需要回复的哦
                     self.scrollView.mj_insetT = top;
+                    
                     // 设置滚动位置
                     CGPoint offset = self.scrollView.contentOffset;
                     offset.y = -top;
