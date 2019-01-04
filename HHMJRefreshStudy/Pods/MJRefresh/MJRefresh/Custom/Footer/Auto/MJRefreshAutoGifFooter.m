@@ -112,5 +112,6 @@
         self.gifView.hidden = YES;
     }
 }
+
 @end
 
