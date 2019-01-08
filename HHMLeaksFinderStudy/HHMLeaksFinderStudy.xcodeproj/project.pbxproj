@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		92123C6B21E43BAB0030514F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92123C6A21E43BAB0030514F /* AppDelegate.m */; };
+		92123C6E21E43BAB0030514F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92123C6D21E43BAB0030514F /* ViewController.m */; };
+		92123C7121E43BAB0030514F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92123C6F21E43BAB0030514F /* Main.storyboard */; };
+		92123C7321E43BAC0030514F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92123C7221E43BAC0030514F /* Assets.xcassets */; };
+		92123C7621E43BAC0030514F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92123C7421E43BAC0030514F /* LaunchScreen.storyboard */; };
+		92123C7921E43BAC0030514F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92123C7821E43BAC0030514F /* main.m */; };
+		92123C8321E43BAC0030514F /* HHMLeaksFinderStudyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92123C8221E43BAC0030514F /* HHMLeaksFinderStudyTests.m */; };
+		92123C8E21E43BAD0030514F /* HHMLeaksFinderStudyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92123C8D21E43BAD0030514F /* HHMLeaksFinderStudyUITests.m */; };
+		9E06F33AFABD72639F8907BB /* libPods-HHMLeaksFinderStudy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F85A1BAF86F9BCF6E40236 /* libPods-HHMLeaksFinderStudy.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		92123C7F21E43BAC0030514F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92123C5E21E43BAB0030514F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92123C6521E43BAB0030514F;
+			remoteInfo = HHMLeaksFinderStudy;
+		};
+		92123C8A21E43BAD0030514F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92123C5E21E43BAB0030514F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92123C6521E43BAB0030514F;
+			remoteInfo = HHMLeaksFinderStudy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		13E175054500EE6C3A76D6ED /* Pods-HHMLeaksFinderStudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHMLeaksFinderStudy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HHMLeaksFinderStudy/Pods-HHMLeaksFinderStudy.debug.xcconfig"; sourceTree = "<group>"; };
+		57A83326A2005E5EED14CADA /* Pods-HHMLeaksFinderStudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHMLeaksFinderStudy.release.xcconfig"; path = "Pods/Target Support Files/Pods-HHMLeaksFinderStudy/Pods-HHMLeaksFinderStudy.release.xcconfig"; sourceTree = "<group>"; };
+		92123C6621E43BAB0030514F /* HHMLeaksFinderStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HHMLeaksFinderStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92123C6921E43BAB0030514F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		92123C6A21E43BAB0030514F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		92123C6C21E43BAB0030514F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		92123C6D21E43BAB0030514F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		92123C7021E43BAB0030514F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		92123C7221E43BAC0030514F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		92123C7521E43BAC0030514F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		92123C7721E43BAC0030514F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92123C7821E43BAC0030514F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		92123C7E21E43BAC0030514F /* HHMLeaksFinderStudyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HHMLeaksFinderStudyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		92123C8221E43BAC0030514F /* HHMLeaksFinderStudyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMLeaksFinderStudyTests.m; sourceTree = "<group>"; };
+		92123C8421E43BAC0030514F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92123C8921E43BAD0030514F /* HHMLeaksFinderStudyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HHMLeaksFinderStudyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		92123C8D21E43BAD0030514F /* HHMLeaksFinderStudyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMLeaksFinderStudyUITests.m; sourceTree = "<group>"; };
+		92123C8F21E43BAD0030514F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4F85A1BAF86F9BCF6E40236 /* libPods-HHMLeaksFinderStudy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HHMLeaksFinderStudy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		92123C6321E43BAB0030514F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9E06F33AFABD72639F8907BB /* libPods-HHMLeaksFinderStudy.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92123C7B21E43BAC0030514F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92123C8621E43BAD0030514F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FA729683DECBA32E5615E7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A4F85A1BAF86F9BCF6E40236 /* libPods-HHMLeaksFinderStudy.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		92123C5D21E43BAB0030514F = {
+			isa = PBXGroup;
+			children = (
+				92123C6821E43BAB0030514F /* HHMLeaksFinderStudy */,
+				92123C8121E43BAC0030514F /* HHMLeaksFinderStudyTests */,
+				92123C8C21E43BAD0030514F /* HHMLeaksFinderStudyUITests */,
+				92123C6721E43BAB0030514F /* Products */,
+				DDF662841F2294EF0D136706 /* Pods */,
+				08FA729683DECBA32E5615E7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		92123C6721E43BAB0030514F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				92123C6621E43BAB0030514F /* HHMLeaksFinderStudy.app */,
+				92123C7E21E43BAC0030514F /* HHMLeaksFinderStudyTests.xctest */,
+				92123C8921E43BAD0030514F /* HHMLeaksFinderStudyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		92123C6821E43BAB0030514F /* HHMLeaksFinderStudy */ = {
+			isa = PBXGroup;
+			children = (
+				92123C6921E43BAB0030514F /* AppDelegate.h */,
+				92123C6A21E43BAB0030514F /* AppDelegate.m */,
+				92123C6C21E43BAB0030514F /* ViewController.h */,
+				92123C6D21E43BAB0030514F /* ViewController.m */,
+				92123C6F21E43BAB0030514F /* Main.storyboard */,
+				92123C7221E43BAC0030514F /* Assets.xcassets */,
+				92123C7421E43BAC0030514F /* LaunchScreen.storyboard */,
+				92123C7721E43BAC0030514F /* Info.plist */,
+				92123C7821E43BAC0030514F /* main.m */,
+			);
+			path = HHMLeaksFinderStudy;
+			sourceTree = "<group>";
+		};
+		92123C8121E43BAC0030514F /* HHMLeaksFinderStudyTests */ = {
+			isa = PBXGroup;
+			children = (
+				92123C8221E43BAC0030514F /* HHMLeaksFinderStudyTests.m */,
+				92123C8421E43BAC0030514F /* Info.plist */,
+			);
+			path = HHMLeaksFinderStudyTests;
+			sourceTree = "<group>";
+		};
+		92123C8C21E43BAD0030514F /* HHMLeaksFinderStudyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				92123C8D21E43BAD0030514F /* HHMLeaksFinderStudyUITests.m */,
+				92123C8F21E43BAD0030514F /* Info.plist */,
+			);
+			path = HHMLeaksFinderStudyUITests;
+			sourceTree = "<group>";
+		};
+		DDF662841F2294EF0D136706 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				13E175054500EE6C3A76D6ED /* Pods-HHMLeaksFinderStudy.debug.xcconfig */,
+				57A83326A2005E5EED14CADA /* Pods-HHMLeaksFinderStudy.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		92123C6521E43BAB0030514F /* HHMLeaksFinderStudy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92123C9221E43BAD0030514F /* Build configuration list for PBXNativeTarget "HHMLeaksFinderStudy" */;
+			buildPhases = (
+				62198EF4447DC2DD78A8EA41 /* [CP] Check Pods Manifest.lock */,
+				92123C6221E43BAB0030514F /* Sources */,
+				92123C6321E43BAB0030514F /* Frameworks */,
+				92123C6421E43BAB0030514F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HHMLeaksFinderStudy;
+			productName = HHMLeaksFinderStudy;
+			productReference = 92123C6621E43BAB0030514F /* HHMLeaksFinderStudy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		92123C7D21E43BAC0030514F /* HHMLeaksFinderStudyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92123C9521E43BAD0030514F /* Build configuration list for PBXNativeTarget "HHMLeaksFinderStudyTests" */;
+			buildPhases = (
+				92123C7A21E43BAC0030514F /* Sources */,
+				92123C7B21E43BAC0030514F /* Frameworks */,
+				92123C7C21E43BAC0030514F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				92123C8021E43BAC0030514F /* PBXTargetDependency */,
+			);
+			name = HHMLeaksFinderStudyTests;
+			productName = HHMLeaksFinderStudyTests;
+			productReference = 92123C7E21E43BAC0030514F /* HHMLeaksFinderStudyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		92123C8821E43BAD0030514F /* HHMLeaksFinderStudyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92123C9821E43BAD0030514F /* Build configuration list for PBXNativeTarget "HHMLeaksFinderStudyUITests" */;
+			buildPhases = (
+				92123C8521E43BAD0030514F /* Sources */,
+				92123C8621E43BAD0030514F /* Frameworks */,
+				92123C8721E43BAD0030514F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				92123C8B21E43BAD0030514F /* PBXTargetDependency */,
+			);
+			name = HHMLeaksFinderStudyUITests;
+			productName = HHMLeaksFinderStudyUITests;
+			productReference = 92123C8921E43BAD0030514F /* HHMLeaksFinderStudyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		92123C5E21E43BAB0030514F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = hehai;
+				TargetAttributes = {
+					92123C6521E43BAB0030514F = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					92123C7D21E43BAC0030514F = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 92123C6521E43BAB0030514F;
+					};
+					92123C8821E43BAD0030514F = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 92123C6521E43BAB0030514F;
+					};
+				};
+			};
+			buildConfigurationList = 92123C6121E43BAB0030514F /* Build configuration list for PBXProject "HHMLeaksFinderStudy" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 92123C5D21E43BAB0030514F;
+			productRefGroup = 92123C6721E43BAB0030514F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				92123C6521E43BAB0030514F /* HHMLeaksFinderStudy */,
+				92123C7D21E43BAC0030514F /* HHMLeaksFinderStudyTests */,
+				92123C8821E43BAD0030514F /* HHMLeaksFinderStudyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		92123C6421E43BAB0030514F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92123C7621E43BAC0030514F /* LaunchScreen.storyboard in Resources */,
+				92123C7321E43BAC0030514F /* Assets.xcassets in Resources */,
+				92123C7121E43BAB0030514F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92123C7C21E43BAC0030514F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92123C8721E43BAD0030514F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62198EF4447DC2DD78A8EA41 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HHMLeaksFinderStudy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		92123C6221E43BAB0030514F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92123C6E21E43BAB0030514F /* ViewController.m in Sources */,
+				92123C7921E43BAC0030514F /* main.m in Sources */,
+				92123C6B21E43BAB0030514F /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92123C7A21E43BAC0030514F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92123C8321E43BAC0030514F /* HHMLeaksFinderStudyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92123C8521E43BAD0030514F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92123C8E21E43BAD0030514F /* HHMLeaksFinderStudyUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		92123C8021E43BAC0030514F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92123C6521E43BAB0030514F /* HHMLeaksFinderStudy */;
+			targetProxy = 92123C7F21E43BAC0030514F /* PBXContainerItemProxy */;
+		};
+		92123C8B21E43BAD0030514F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92123C6521E43BAB0030514F /* HHMLeaksFinderStudy */;
+			targetProxy = 92123C8A21E43BAD0030514F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		92123C6F21E43BAB0030514F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92123C7021E43BAB0030514F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		92123C7421E43BAC0030514F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92123C7521E43BAC0030514F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		92123C9021E43BAD0030514F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		92123C9121E43BAD0030514F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		92123C9321E43BAD0030514F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13E175054500EE6C3A76D6ED /* Pods-HHMLeaksFinderStudy.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P4KTPZ4X29;
+				INFOPLIST_FILE = HHMLeaksFinderStudy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		92123C9421E43BAD0030514F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57A83326A2005E5EED14CADA /* Pods-HHMLeaksFinderStudy.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P4KTPZ4X29;
+				INFOPLIST_FILE = HHMLeaksFinderStudy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		92123C9621E43BAD0030514F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P4KTPZ4X29;
+				INFOPLIST_FILE = HHMLeaksFinderStudyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HHMLeaksFinderStudy.app/HHMLeaksFinderStudy";
+			};
+			name = Debug;
+		};
+		92123C9721E43BAD0030514F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P4KTPZ4X29;
+				INFOPLIST_FILE = HHMLeaksFinderStudyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HHMLeaksFinderStudy.app/HHMLeaksFinderStudy";
+			};
+			name = Release;
+		};
+		92123C9921E43BAD0030514F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P4KTPZ4X29;
+				INFOPLIST_FILE = HHMLeaksFinderStudyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HHMLeaksFinderStudy;
+			};
+			name = Debug;
+		};
+		92123C9A21E43BAD0030514F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P4KTPZ4X29;
+				INFOPLIST_FILE = HHMLeaksFinderStudyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HHMLeaksFinderStudy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		92123C6121E43BAB0030514F /* Build configuration list for PBXProject "HHMLeaksFinderStudy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92123C9021E43BAD0030514F /* Debug */,
+				92123C9121E43BAD0030514F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92123C9221E43BAD0030514F /* Build configuration list for PBXNativeTarget "HHMLeaksFinderStudy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92123C9321E43BAD0030514F /* Debug */,
+				92123C9421E43BAD0030514F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92123C9521E43BAD0030514F /* Build configuration list for PBXNativeTarget "HHMLeaksFinderStudyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92123C9621E43BAD0030514F /* Debug */,
+				92123C9721E43BAD0030514F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92123C9821E43BAD0030514F /* Build configuration list for PBXNativeTarget "HHMLeaksFinderStudyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92123C9921E43BAD0030514F /* Debug */,
+				92123C9A21E43BAD0030514F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 92123C5E21E43BAB0030514F /* Project object */;
+}
