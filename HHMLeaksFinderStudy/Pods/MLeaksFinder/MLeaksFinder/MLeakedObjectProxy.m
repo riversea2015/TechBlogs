@@ -30,7 +30,7 @@ static NSMutableSet *leakedObjectPtrs;
 + (BOOL)isAnyObjectLeakedAtPtrs:(NSSet *)ptrs {
     NSAssert([NSThread isMainThread], @"Must be in main thread.");
     
-    // leakedObjectPtrs 是一个单例，用来存储什么？
+    // leakedObjectPtrs 是一个单例，用来存储发生内泄的对象地址(已经转成了数值，即 uintptr_t)
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         leakedObjectPtrs = [[NSMutableSet alloc] init];
@@ -56,7 +56,6 @@ static NSMutableSet *leakedObjectPtrs;
     proxy.object = object;
     proxy.objectPtr = @((uintptr_t)object);
     proxy.viewStack = [object viewStack];
-    
     
     // ** 此处存储了整个 proxy
     static const void *const kLeakedObjectProxyKey = &kLeakedObjectProxyKey;
