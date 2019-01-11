@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9200AE1321E88924005D8097 /* HHLeaksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9200AE1221E88924005D8097 /* HHLeaksViewController.m */; };
 		92123C6B21E43BAB0030514F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92123C6A21E43BAB0030514F /* AppDelegate.m */; };
 		92123C6E21E43BAB0030514F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92123C6D21E43BAB0030514F /* ViewController.m */; };
 		92123C7121E43BAB0030514F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92123C6F21E43BAB0030514F /* Main.storyboard */; };
@@ -38,6 +39,8 @@
 /* Begin PBXFileReference section */
 		13E175054500EE6C3A76D6ED /* Pods-HHMLeaksFinderStudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHMLeaksFinderStudy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HHMLeaksFinderStudy/Pods-HHMLeaksFinderStudy.debug.xcconfig"; sourceTree = "<group>"; };
 		57A83326A2005E5EED14CADA /* Pods-HHMLeaksFinderStudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHMLeaksFinderStudy.release.xcconfig"; path = "Pods/Target Support Files/Pods-HHMLeaksFinderStudy/Pods-HHMLeaksFinderStudy.release.xcconfig"; sourceTree = "<group>"; };
+		9200AE1121E88924005D8097 /* HHLeaksViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHLeaksViewController.h; sourceTree = "<group>"; };
+		9200AE1221E88924005D8097 /* HHLeaksViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHLeaksViewController.m; sourceTree = "<group>"; };
 		92123C6621E43BAB0030514F /* HHMLeaksFinderStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HHMLeaksFinderStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92123C6921E43BAB0030514F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		92123C6A21E43BAB0030514F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -120,6 +123,8 @@
 				92123C6A21E43BAB0030514F /* AppDelegate.m */,
 				92123C6C21E43BAB0030514F /* ViewController.h */,
 				92123C6D21E43BAB0030514F /* ViewController.m */,
+				9200AE1121E88924005D8097 /* HHLeaksViewController.h */,
+				9200AE1221E88924005D8097 /* HHLeaksViewController.m */,
 				92123C6F21E43BAB0030514F /* Main.storyboard */,
 				92123C7221E43BAC0030514F /* Assets.xcassets */,
 				92123C7421E43BAC0030514F /* LaunchScreen.storyboard */,
@@ -309,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92123C6E21E43BAB0030514F /* ViewController.m in Sources */,
+				9200AE1321E88924005D8097 /* HHLeaksViewController.m in Sources */,
 				92123C7921E43BAC0030514F /* main.m in Sources */,
 				92123C6B21E43BAB0030514F /* AppDelegate.m in Sources */,
 			);
@@ -486,7 +492,10 @@
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMLeaksFinderStudy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -502,7 +511,10 @@
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMLeaksFinderStudy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -516,7 +528,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMLeaksFinderStudyTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -531,7 +547,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMLeaksFinderStudyTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -545,7 +565,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMLeaksFinderStudyUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -559,7 +583,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMLeaksFinderStudyUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMLeaksFinderStudyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

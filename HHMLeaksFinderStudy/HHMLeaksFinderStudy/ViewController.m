@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "HHLeaksViewController.h"
 
 @interface ViewController ()
 
@@ -19,5 +20,10 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    HHLeaksViewController *leaksVC = [[HHLeaksViewController alloc] init];
+    [self.navigationController pushViewController:leaksVC animated:YES];
+}
 
 @end
