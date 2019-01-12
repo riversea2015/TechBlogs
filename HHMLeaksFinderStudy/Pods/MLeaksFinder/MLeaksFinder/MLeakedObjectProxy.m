@@ -57,13 +57,14 @@ static NSMutableSet *leakedObjectPtrs;
     proxy.objectPtr = @((uintptr_t)object);
     proxy.viewStack = [object viewStack];
     
-    // ** 此处存储了整个 proxy
+    // 1.给每一个 object 关联一个代理即proxy
     static const void *const kLeakedObjectProxyKey = &kLeakedObjectProxyKey;
     objc_setAssociatedObject(object, kLeakedObjectProxyKey, proxy, OBJC_ASSOCIATION_RETAIN);
     
-    // ** 此处仅存储了 proxy.objectPtr
+    // 2.存储 proxy.objectPtr 到集合 leakedObjectPtrs 里边
     [leakedObjectPtrs addObject:proxy.objectPtr];
     
+    // 3.弹框：若 _INTERNAL_MLF_RC_ENABLED == 1，则弹框增加检测循环引用的选项；否则只是展示堆栈信息
 #if _INTERNAL_MLF_RC_ENABLED
     [MLeaksMessenger alertWithTitle:@"Memory Leak"
                             message:[NSString stringWithFormat:@"%@", proxy.viewStack]

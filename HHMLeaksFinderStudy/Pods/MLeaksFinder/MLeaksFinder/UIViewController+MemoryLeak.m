@@ -57,9 +57,11 @@ const void *const kHasBeenPoppedKey = &kHasBeenPoppedKey;
         return NO;
     }
     
+    // 子 viewController
     [self willReleaseChildren:self.childViewControllers];
     [self willReleaseChild:self.presentedViewController];
     
+    // 子 view
     if (self.isViewLoaded) {
         [self willReleaseChild:self.view];
     }
