@@ -4,7 +4,7 @@
 
 ### 1.简介
 
-  这个仓库是 [简书-个人主页](https://www.jianshu.com/u/71f817a3a70b) 中博客的相关代码，现在已同步 [个人博客](https://devhe.com/)。
+  这个仓库是 [简书](https://www.jianshu.com/u/71f817a3a70b) 中博客的相关代码，并已同步 [技术博客](https://devhe.com/)。
 
 ### 2.博客列表
   
@@ -25,10 +25,10 @@
 - [SDWebImage源码学习笔记 ☞ SDImageCache](https://www.jianshu.com/p/e3f4a7f57899)
 
 《MBProgressHUD 源码学习笔记》 1篇：
-- [MBProgressHUD 源码学习笔记](https://www.jianshu.com/p/b5eeee088e03)
+- [MBProgressHUD 源码学习笔记](https://www.jianshu.com/p/b5eeee088e03) + [技术博客](https://devhe.com/2018/12/16/MBProgressHUD-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
 
 《MJRefresh 源码学习笔记》 1篇：
-- [MJRefresh 源码学习笔记](https://www.jianshu.com/p/c391621b3e80)
+- [MJRefresh 源码学习笔记](https://www.jianshu.com/p/c391621b3e80) + [技术博客](https://devhe.com/2019/01/04/MJRefresh-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
 
 《MLeaksFinder 源码学习笔记》 1篇：
-- MLeaksFinder 源码学习笔记：[简书地址](https://www.jianshu.com/p/5a7e8360ba3f) [博客地址](https://devhe.com/2019/01/12/MLeaksFinder-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more)
+- [MLeaksFinder 源码学习笔记](https://www.jianshu.com/p/5a7e8360ba3f) + [技术博客](https://devhe.com/2019/01/12/MLeaksFinder-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
