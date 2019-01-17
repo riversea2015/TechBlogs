@@ -4,7 +4,7 @@ SDWebImage 源码学习笔记
 
 ### 简介
 
-这是一个用于学习 SDWebImage 源码的 Demo，其中包含了 SDWebImage 的使用示例及源码注释，同时，自己简单实现了二级缓存的逻辑，见 `CustomCache` 这个目录。
+这是一个用于学习 SDWebImage 源码的 Demo，其中包含了 SDWebImage 的使用示例及源码注释，同时，自己简单实现了二级缓存的逻辑，见 [CustomCache](https://github.com/riversea2015/CodeForBlogs/tree/master/HHSDWebImageStudy/HHSDWebImageStudy/CustomCache) 这个目录。
 
 《SDWebImage 源码学习笔记》见 [简书·个人主页](https://www.jianshu.com/u/71f817a3a70b)，共分以下 5 篇进行讨论：
 
