@@ -8,6 +8,7 @@
 
 #import "HHEntranceVC.h"
 #import "HHImageViewController.h"
+#import "HHWebImageViewController.h"
 
 static const NSInteger HHBtnTagBase = 20180717;
 
@@ -23,8 +24,9 @@ static const NSInteger HHBtnTagBase = 20180717;
     self.title = NSStringFromClass([self class]);
     
     for (int i = 0; i < 3; i++) {
-        [self createBtnWithTag:i];
+        [self createBtnWithTag:i title:nil];
     }
+    [self createBtnWithTag:4 title:@"自己实现的缓存示例"];
     
     UILabel *warnLab = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.view.frame)-150, self.view.bounds.size.width-20, 100)];
     warnLab.textColor = [UIColor redColor];
@@ -33,13 +35,17 @@ static const NSInteger HHBtnTagBase = 20180717;
     [self.view addSubview:warnLab];
 }
 
-- (UIButton *)createBtnWithTag:(NSInteger)tag {
+- (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)strTitle {
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(10, 100+(100+10)*tag, 200, 100);
     btn.tag = tag + HHBtnTagBase;
-    btn.backgroundColor = tag == 1 ? [UIColor greenColor] : [UIColor redColor];
-    [btn setTitle:[NSString stringWithFormat:@"方案 <%ld>", tag+1] forState:UIControlStateNormal];
+    btn.backgroundColor = (tag % 2 == 1) ? [UIColor greenColor] : [UIColor redColor];
+    if (strTitle) {
+        [btn setTitle:strTitle forState:UIControlStateNormal];
+    } else {
+        [btn setTitle:[NSString stringWithFormat:@"方案 <%ld>", tag+1] forState:UIControlStateNormal];
+    }
     [btn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:btn];
@@ -48,6 +54,13 @@ static const NSInteger HHBtnTagBase = 20180717;
 }
 
 - (void)clickBtn:(UIButton *)sender {
+    
+    if (sender.tag == HHBtnTagBase + 4) {
+        HHWebImageViewController *vc = [HHWebImageViewController new];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    
     HHImageViewController *vc = [HHImageViewController new];
     vc.type = sender.tag-HHBtnTagBase;
     [self.navigationController pushViewController:vc animated:YES];

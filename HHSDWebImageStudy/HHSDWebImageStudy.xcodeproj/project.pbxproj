@@ -18,6 +18,10 @@
 		92C5A71F20FDD44500D9EB58 /* HHSDWebImageStudyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A71E20FDD44500D9EB58 /* HHSDWebImageStudyUITests.m */; };
 		92C5A72D20FDD47F00D9EB58 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 92C5A72C20FDD47F00D9EB58 /* Podfile */; };
 		92C5A73020FDDB0000D9EB58 /* HHImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A72F20FDDB0000D9EB58 /* HHImageViewController.m */; };
+		92F3E0FC21F0848B003688D9 /* HHWebImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92F3E0F421F0848B003688D9 /* HHWebImageCell.xib */; };
+		92F3E0FD21F0848B003688D9 /* HHWebImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F3E0F521F0848B003688D9 /* HHWebImageCell.m */; };
+		92F3E0FE21F0848B003688D9 /* HHWebImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F3E0F721F0848B003688D9 /* HHWebImageViewController.m */; };
+		92F3E0FF21F0848B003688D9 /* HHWebImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F3E0FB21F0848B003688D9 /* HHWebImageModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +64,13 @@
 		92C5A72C20FDD47F00D9EB58 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		92C5A72E20FDDB0000D9EB58 /* HHImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHImageViewController.h; sourceTree = "<group>"; };
 		92C5A72F20FDDB0000D9EB58 /* HHImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHImageViewController.m; sourceTree = "<group>"; };
+		92F3E0F321F0848B003688D9 /* HHWebImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWebImageCell.h; sourceTree = "<group>"; };
+		92F3E0F421F0848B003688D9 /* HHWebImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HHWebImageCell.xib; sourceTree = "<group>"; };
+		92F3E0F521F0848B003688D9 /* HHWebImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHWebImageCell.m; sourceTree = "<group>"; };
+		92F3E0F721F0848B003688D9 /* HHWebImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHWebImageViewController.m; sourceTree = "<group>"; };
+		92F3E0F821F0848B003688D9 /* HHWebImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWebImageViewController.h; sourceTree = "<group>"; };
+		92F3E0FA21F0848B003688D9 /* HHWebImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWebImageModel.h; sourceTree = "<group>"; };
+		92F3E0FB21F0848B003688D9 /* HHWebImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHWebImageModel.m; sourceTree = "<group>"; };
 		FD3106E6D26CAB6EB7119C54 /* Pods-HHSDWebImageStudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HHSDWebImageStudy.release.xcconfig"; path = "Pods/Target Support Files/Pods-HHSDWebImageStudy/Pods-HHSDWebImageStudy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,10 +139,8 @@
 				92C5A6FB20FDD44400D9EB58 /* AppDelegate.m */,
 				92C5A6FD20FDD44400D9EB58 /* HHEntranceVC.h */,
 				92C5A6FE20FDD44400D9EB58 /* HHEntranceVC.m */,
-				92C5A72E20FDDB0000D9EB58 /* HHImageViewController.h */,
-				92C5A72F20FDDB0000D9EB58 /* HHImageViewController.m */,
-				9272BBE2217EEF9900153720 /* HHImageView.h */,
-				9272BBE3217EEF9900153720 /* HHImageView.m */,
+				92F3E10021F084B7003688D9 /* SDWebImageExample */,
+				92F3E0F121F08468003688D9 /* CustomCache */,
 				92C5A70320FDD44500D9EB58 /* Assets.xcassets */,
 				92C5A70520FDD44500D9EB58 /* LaunchScreen.storyboard */,
 				92C5A70820FDD44500D9EB58 /* Info.plist */,
@@ -156,6 +165,55 @@
 				92C5A72020FDD44500D9EB58 /* Info.plist */,
 			);
 			path = HHSDWebImageStudyUITests;
+			sourceTree = "<group>";
+		};
+		92F3E0F121F08468003688D9 /* CustomCache */ = {
+			isa = PBXGroup;
+			children = (
+				92F3E0F621F0848B003688D9 /* Controllers */,
+				92F3E0F921F0848B003688D9 /* Models */,
+				92F3E0F221F0848B003688D9 /* Views */,
+			);
+			path = CustomCache;
+			sourceTree = "<group>";
+		};
+		92F3E0F221F0848B003688D9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92F3E0F321F0848B003688D9 /* HHWebImageCell.h */,
+				92F3E0F521F0848B003688D9 /* HHWebImageCell.m */,
+				92F3E0F421F0848B003688D9 /* HHWebImageCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		92F3E0F621F0848B003688D9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				92F3E0F821F0848B003688D9 /* HHWebImageViewController.h */,
+				92F3E0F721F0848B003688D9 /* HHWebImageViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		92F3E0F921F0848B003688D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				92F3E0FA21F0848B003688D9 /* HHWebImageModel.h */,
+				92F3E0FB21F0848B003688D9 /* HHWebImageModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		92F3E10021F084B7003688D9 /* SDWebImageExample */ = {
+			isa = PBXGroup;
+			children = (
+				92C5A72E20FDDB0000D9EB58 /* HHImageViewController.h */,
+				92C5A72F20FDDB0000D9EB58 /* HHImageViewController.m */,
+				9272BBE2217EEF9900153720 /* HHImageView.h */,
+				9272BBE3217EEF9900153720 /* HHImageView.m */,
+			);
+			path = SDWebImageExample;
 			sourceTree = "<group>";
 		};
 		F2E31D36148B95728BC26D06 /* Frameworks */ = {
@@ -270,6 +328,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92F3E0FC21F0848B003688D9 /* HHWebImageCell.xib in Resources */,
 				92C5A70720FDD44500D9EB58 /* LaunchScreen.storyboard in Resources */,
 				92C5A70420FDD44500D9EB58 /* Assets.xcassets in Resources */,
 				92C5A72D20FDD47F00D9EB58 /* Podfile in Resources */,
@@ -318,10 +377,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92F3E0FD21F0848B003688D9 /* HHWebImageCell.m in Sources */,
 				92C5A6FF20FDD44400D9EB58 /* HHEntranceVC.m in Sources */,
 				9272BBE4217EEF9900153720 /* HHImageView.m in Sources */,
 				92C5A70A20FDD44500D9EB58 /* main.m in Sources */,
 				92C5A6FC20FDD44400D9EB58 /* AppDelegate.m in Sources */,
+				92F3E0FE21F0848B003688D9 /* HHWebImageViewController.m in Sources */,
+				92F3E0FF21F0848B003688D9 /* HHWebImageModel.m in Sources */,
 				92C5A73020FDDB0000D9EB58 /* HHImageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
