@@ -13,13 +13,17 @@
 static NSString * const cellID = @"HHWebImageCell";
 
 @interface HHWebImageViewController ()<UITableViewDataSource, UITableViewDelegate>
+
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) HHWebImageModel *imageModel;
+
 @property (nonatomic, strong) NSMutableArray *imageArr;
 
 @property (nonatomic, strong) NSOperationQueue *queue;
+
 @property (nonatomic, strong) NSMutableDictionary *imagesDic;
+
 @property (nonatomic, strong) NSString *cachesPath;
 
 @end
@@ -46,7 +50,7 @@ static NSString * const cellID = @"HHWebImageCell";
     [self.imageArr addObjectsFromArray:self.imageModel.pictureArr];
 }
 
-#pragma mark - tableView dataSource delegate
+#pragma mark - tableView DataSource & Delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -76,15 +80,15 @@ static NSString * const cellID = @"HHWebImageCell";
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.imageArr removeObjectAtIndex:indexPath.row];
-        
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+    
     if (editingStyle == UITableViewCellEditingStyleInsert) {
         // 插入/添加 的逻辑
     }
-    
 }
 
 #pragma mark - private method
@@ -115,6 +119,7 @@ static NSString * const cellID = @"HHWebImageCell";
     __weak typeof(self) weakSelf = self; // 为避免block中的引用循环
     
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        
         NSString *str = weakSelf.imageArr[indexPath.row];
         NSURL *url = [NSURL URLWithString:str];
         if (!url) { // 判断URL是否生成
@@ -153,7 +158,6 @@ static NSString * const cellID = @"HHWebImageCell";
     }];
     
     [weakSelf.queue addOperation:operation];
-    
 }
 
 #pragma mark - setter and getter

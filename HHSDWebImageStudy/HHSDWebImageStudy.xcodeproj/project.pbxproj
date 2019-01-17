@@ -16,7 +16,6 @@
 		92C5A70A20FDD44500D9EB58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A70920FDD44500D9EB58 /* main.m */; };
 		92C5A71420FDD44500D9EB58 /* HHSDWebImageStudyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A71320FDD44500D9EB58 /* HHSDWebImageStudyTests.m */; };
 		92C5A71F20FDD44500D9EB58 /* HHSDWebImageStudyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A71E20FDD44500D9EB58 /* HHSDWebImageStudyUITests.m */; };
-		92C5A72D20FDD47F00D9EB58 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 92C5A72C20FDD47F00D9EB58 /* Podfile */; };
 		92C5A73020FDDB0000D9EB58 /* HHImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A72F20FDDB0000D9EB58 /* HHImageViewController.m */; };
 		92F3E0FC21F0848B003688D9 /* HHWebImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92F3E0F421F0848B003688D9 /* HHWebImageCell.xib */; };
 		92F3E0FD21F0848B003688D9 /* HHWebImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F3E0F521F0848B003688D9 /* HHWebImageCell.m */; };
@@ -61,7 +60,6 @@
 		92C5A71A20FDD44500D9EB58 /* HHSDWebImageStudyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HHSDWebImageStudyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C5A71E20FDD44500D9EB58 /* HHSDWebImageStudyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSDWebImageStudyUITests.m; sourceTree = "<group>"; };
 		92C5A72020FDD44500D9EB58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		92C5A72C20FDD47F00D9EB58 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		92C5A72E20FDDB0000D9EB58 /* HHImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHImageViewController.h; sourceTree = "<group>"; };
 		92C5A72F20FDDB0000D9EB58 /* HHImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHImageViewController.m; sourceTree = "<group>"; };
 		92F3E0F321F0848B003688D9 /* HHWebImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWebImageCell.h; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 		92C5A6EE20FDD44400D9EB58 = {
 			isa = PBXGroup;
 			children = (
-				92C5A72C20FDD47F00D9EB58 /* Podfile */,
 				92C5A6F920FDD44400D9EB58 /* HHSDWebImageStudy */,
 				92C5A71220FDD44500D9EB58 /* HHSDWebImageStudyTests */,
 				92C5A71D20FDD44500D9EB58 /* HHSDWebImageStudyUITests */,
@@ -331,7 +328,6 @@
 				92F3E0FC21F0848B003688D9 /* HHWebImageCell.xib in Resources */,
 				92C5A70720FDD44500D9EB58 /* LaunchScreen.storyboard in Resources */,
 				92C5A70420FDD44500D9EB58 /* Assets.xcassets in Resources */,
-				92C5A72D20FDD47F00D9EB58 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface HHWebImageModel : NSObject
+
+/// 图片数组
 @property (nonatomic, strong) NSArray *pictureArr;
 
 @end
