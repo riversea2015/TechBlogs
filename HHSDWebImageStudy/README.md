@@ -14,13 +14,10 @@ SDWebImage 源码学习笔记
 - [SDWebImage源码学习笔记 ☞ SDWebImageDownloader](https://www.jianshu.com/p/06071cba3404)
 - [SDWebImage源码学习笔记 ☞ SDImageCache](https://www.jianshu.com/p/e3f4a7f57899)
 
-### 附录
+### 备注
 
-同时，自己简单实现了二级缓存的逻辑，代码在 [CustomCache](https://github.com/riversea2015/CodeForBlogs/tree/master/HHSDWebImageStudy/HHSDWebImageStudy/CustomCache) 这个目录，示例截图如下：
+1.自己简单实现了二级缓存的逻辑，代码在 [CustomCache](https://github.com/riversea2015/CodeForBlogs/tree/master/HHSDWebImageStudy/HHSDWebImageStudy/CustomCache) 这个目录，示例截图如下：
 
 ![截图](https://github.com/riversea2015/CodeForBlogs/blob/master/HHSDWebImageStudy/ScreenShort/ScreenShort.gif)
 
-
-### 备注
-
-下载后请勿更新 pod，否则源码中的注释就没了。
+2.下载后请勿更新 pod，否则源码中的注释就没了。
