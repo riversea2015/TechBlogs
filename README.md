@@ -25,13 +25,11 @@
 - [SDWebImage源码学习笔记 ☞ SDImageCache](https://www.jianshu.com/p/e3f4a7f57899)
 
 《MBProgressHUD 源码学习笔记》 1篇：
-- [MBProgressHUD 源码学习笔记](https://www.jianshu.com/p/b5eeee088e03) + [技术博客](https://devhe.com/2018/12/16/MBProgressHUD-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
-
+- [MBProgressHUD 源码学习笔记](https://www.jianshu.com/p/b5eeee088e03)
 《MJRefresh 源码学习笔记》 1篇：
-- [MJRefresh 源码学习笔记](https://www.jianshu.com/p/c391621b3e80) + [技术博客](https://devhe.com/2019/01/04/MJRefresh-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
-
+- [MJRefresh 源码学习笔记](https://www.jianshu.com/p/c391621b3e80)
 《MLeaksFinder 源码学习笔记》 1篇：
-- [MLeaksFinder 源码学习笔记](https://www.jianshu.com/p/5a7e8360ba3f) + [技术博客](https://devhe.com/2019/01/12/MLeaksFinder-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
+- [MLeaksFinder 源码学习笔记](https://www.jianshu.com/p/5a7e8360ba3f)
 
 《深入理解 Objective-C》计划 7 篇：
 - [深入理解 Objective-C ☞ Class](https://www.jianshu.com/p/241e8be676a9)
