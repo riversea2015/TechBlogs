@@ -4,7 +4,7 @@
 
 ### 简介
 
-此 demo 集合用于记录学习OC底层实现原理。
+此 demo 集合用于记录学习 Objective-C 底层实现原理。
 
 《深入理解 Objective-C ☞ xxx》见 [简书·个人主页](https://www.jianshu.com/u/71f817a3a70b)，计划 7 篇：
 
