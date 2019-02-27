@@ -4,7 +4,7 @@
 
 ### 1.简介
 
-  这个仓库是 [简书](https://www.jianshu.com/u/71f817a3a70b) 中博客的相关代码，以下 blog 均已同步 [个人技术博客](https://devhe.com/)。
+  这个仓库是 [简书](https://www.jianshu.com/u/71f817a3a70b) 中博客的相关代码，以下 blog 均已同步 [个人技术博客（点击图片跳转）](https://devhe.com/)。
   
   [![个人技术博客](https://github.com/riversea2015/CodeForBlogs/blob/master/ScreenShots/devhe@2x.png?raw=true)](https://devhe.com)
 
