@@ -4847,7 +4847,7 @@ log_and_fill_cache(Class cls, IMP imp, SEL sel, id receiver, Class implementer)
 * This lookup avoids optimistic cache scan because the dispatcher 
 * already tried that.
 **********************************************************************/
-IMP _class_lookupMethodAndLoadCache3(id obj, SEL sel, Class cls)
+IMP _class_lookupMethodAndLoadCache3(id obj, SEL sel, Class cls) // 🍎 8.
 {
     return lookUpImpOrForward(cls, sel, obj, 
                               YES/*initialize*/, NO/*cache*/, YES/*resolver*/);
@@ -4867,7 +4867,7 @@ IMP _class_lookupMethodAndLoadCache3(id obj, SEL sel, Class cls)
 *   If you don't want forwarding at all, use lookUpImpOrNil() instead.
 **********************************************************************/
 IMP lookUpImpOrForward(Class cls, SEL sel, id inst, 
-                       bool initialize, bool cache, bool resolver)
+                       bool initialize, bool cache, bool resolver) // 🍎 9.
 {
     IMP imp = nil;
     bool triedResolver = NO;
@@ -4940,7 +4940,7 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
                 _objc_fatal("Memory corruption in class list.");
             }
             
-            // Superclass cache.
+            // 父类缓存 - Superclass cache.
             imp = cache_getImp(curClass, sel);
             if (imp) {
                 if (imp != (IMP)_objc_msgForward_impcache) {
@@ -4956,7 +4956,7 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
                 }
             }
             
-            // Superclass method list.
+            // 父类方法列表 - Superclass method list.
             Method meth = getMethodNoSuper_nolock(curClass, sel);
             if (meth) {
                 log_and_fill_cache(cls, meth->imp, sel, inst, curClass);
@@ -4970,11 +4970,13 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
 
     if (resolver  &&  !triedResolver) {
         runtimeLock.unlock();
-        _class_resolveMethod(cls, sel, inst);
+        _class_resolveMethod(cls, sel, inst); // resolveMethod
         runtimeLock.lock();
         // Don't cache the result; we don't hold the lock so it may have 
         // changed already. Re-do the search from scratch instead.
         triedResolver = YES;
+        
+        // 执行完 +resolveClassMethod 或 +resolveInstanceMethod 后，再按照之前的流程执行：查找缓存 -> 查找方法列表 -> ...
         goto retry;
     }
 

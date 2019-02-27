@@ -570,7 +570,7 @@ void fixupCopiedIvars(id newObject, id oldObject)
 * cls should be a metaclass.
 * Does not check if the method already exists.
 **********************************************************************/
-static void _class_resolveClassMethod(Class cls, SEL sel, id inst)
+static void _class_resolveClassMethod(Class cls, SEL sel, id inst) // 🍎 12. 与 _class_resolveInstanceMethod 类似
 {
     assert(cls->isMetaClass());
 
@@ -615,8 +615,9 @@ static void _class_resolveClassMethod(Class cls, SEL sel, id inst)
 * cls may be a metaclass or a non-meta class.
 * Does not check if the method already exists.
 **********************************************************************/
-static void _class_resolveInstanceMethod(Class cls, SEL sel, id inst)
+static void _class_resolveInstanceMethod(Class cls, SEL sel, id inst) // 🍎 11.
 {
+    // 1.如果没找到 resolveInstanceMethod 的方法实现，直接返回
     if (! lookUpImpOrNil(cls->ISA(), SEL_resolveInstanceMethod, cls, 
                          NO/*initialize*/, YES/*cache*/, NO/*resolver*/)) 
     {
@@ -624,9 +625,12 @@ static void _class_resolveInstanceMethod(Class cls, SEL sel, id inst)
         return;
     }
 
+    // 2.*** 调用了 objc_msgSend(), 其中 sel 是 +resolveInstanceMethod 的一个参数
+    // 2.*** 可以自己实现 +resolveInstanceMethod: 方法，在其中添加方法等，注意这里只是添加进去。
     BOOL (*msg)(Class, SEL, SEL) = (typeof(msg))objc_msgSend;
     bool resolved = msg(cls, SEL_resolveInstanceMethod, sel);
 
+    // 3.执行结束后，缓存结果，避免下次再次执行这个流程
     // Cache the result (good or bad) so the resolver doesn't fire next time.
     // +resolveInstanceMethod adds to self a.k.a. cls
     IMP imp = lookUpImpOrNil(cls, sel, inst, 
@@ -657,19 +661,23 @@ static void _class_resolveInstanceMethod(Class cls, SEL sel, id inst)
 * Returns nothing; any result would be potentially out-of-date already.
 * Does not check if the method already exists.
 **********************************************************************/
-void _class_resolveMethod(Class cls, SEL sel, id inst)
+void _class_resolveMethod(Class cls, SEL sel, id inst) // 🍎 10.
 {
     if (! cls->isMetaClass()) {
+        
+        // 1.类对象的话，调用 +resolveInstanceMethod: 方法
+        
         // try [cls resolveInstanceMethod:sel]
         _class_resolveInstanceMethod(cls, sel, inst);
-    } 
-    else {
+        
+    } else {
+        
+        // 2.元类对象，调用 +resolveClassMethod: 方法
+        
         // try [nonMetaClass resolveClassMethod:sel]
         // and [cls resolveInstanceMethod:sel]
         _class_resolveClassMethod(cls, sel, inst);
-        if (!lookUpImpOrNil(cls, sel, inst, 
-                            NO/*initialize*/, YES/*cache*/, NO/*resolver*/)) 
-        {
+        if (!lookUpImpOrNil(cls, sel, inst, NO/*initialize*/, YES/*cache*/, NO/*resolver*/)) {
             _class_resolveInstanceMethod(cls, sel, inst);
         }
     }
