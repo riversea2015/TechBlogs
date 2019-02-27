@@ -21,3 +21,5 @@ SDWebImage 源码学习笔记
 ![截图](https://github.com/riversea2015/CodeForBlogs/blob/master/HHSDWebImageStudy/ScreenShort/ScreenShort.gif)
 
 2.下载后请勿更新 pod，否则源码中的注释就没了。
+
+[![测试](https://github.com/riversea2015/CodeForBlogs/blob/master/HHSDWebImageStudy/HHSDWebImageStudy/Assets.xcassets/placeholder.imageset/placeholder@2x.png?raw=true)](https://devhe.com)
