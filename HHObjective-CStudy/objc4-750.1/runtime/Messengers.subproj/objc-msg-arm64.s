@@ -525,15 +525,15 @@ LGetImpMiss:
 *
 ********************************************************************/
 
-	STATIC_ENTRY __objc_msgForward_impcache
+	STATIC_ENTRY __objc_msgForward_impcache // 🍎 13.
 
 	// No stret specialization.
-	b	__objc_msgForward
+	b	__objc_msgForward // 🍎
 
 	END_ENTRY __objc_msgForward_impcache
 
 	
-	ENTRY __objc_msgForward
+	ENTRY __objc_msgForward // 🍎 14.到这里走不下去了 (⊙﹏⊙)b
 
 	adrp	x17, __objc_forward_handler@PAGE
 	ldr	p17, [x17, __objc_forward_handler@PAGEOFF]

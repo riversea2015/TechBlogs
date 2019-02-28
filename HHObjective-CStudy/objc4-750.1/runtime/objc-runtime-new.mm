@@ -4969,9 +4969,11 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
     // 4.都找不到的时候 No implementation found. Try method resolver once.
 
     if (resolver  &&  !triedResolver) {
+        
         runtimeLock.unlock();
-        _class_resolveMethod(cls, sel, inst); // resolveMethod
+        _class_resolveMethod(cls, sel, inst); // 🍎 resolveMethod
         runtimeLock.lock();
+        
         // Don't cache the result; we don't hold the lock so it may have 
         // changed already. Re-do the search from scratch instead.
         triedResolver = YES;
@@ -4980,10 +4982,12 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
         goto retry;
     }
 
+    // 如果 resolver 也不起作用，走这里 ☟
+    
     // No implementation found, and method resolver didn't help. 
     // Use forwarding.
 
-    imp = (IMP)_objc_msgForward_impcache;
+    imp = (IMP)_objc_msgForward_impcache; // 🍎 在 “C/C++” 中找不到此方法实现，但在 “汇编” 中找到了 -> 🍎 13.
     cache_fill(cls, sel, imp, inst);
 
  done:

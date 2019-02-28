@@ -668,7 +668,7 @@ void _class_resolveMethod(Class cls, SEL sel, id inst) // 🍎 10.
         // 1.类对象的话，调用 +resolveInstanceMethod: 方法
         
         // try [cls resolveInstanceMethod:sel]
-        _class_resolveInstanceMethod(cls, sel, inst);
+        _class_resolveInstanceMethod(cls, sel, inst); // 🍎
         
     } else {
         
@@ -676,7 +676,7 @@ void _class_resolveMethod(Class cls, SEL sel, id inst) // 🍎 10.
         
         // try [nonMetaClass resolveClassMethod:sel]
         // and [cls resolveInstanceMethod:sel]
-        _class_resolveClassMethod(cls, sel, inst);
+        _class_resolveClassMethod(cls, sel, inst); // 🍎
         if (!lookUpImpOrNil(cls, sel, inst, NO/*initialize*/, YES/*cache*/, NO/*resolver*/)) {
             _class_resolveInstanceMethod(cls, sel, inst);
         }
