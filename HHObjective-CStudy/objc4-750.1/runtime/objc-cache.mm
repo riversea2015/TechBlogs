@@ -86,7 +86,7 @@
 #include "objc-private.h"
 #include "objc-cache.h"
 
-
+/* 初始化 cache bucket 的数量， INIT_CACHE_SIZE 必须是 2 的 n 次方*/
 /* Initial cache bucket count. INIT_CACHE_SIZE must be a power of two. */
 enum {
     INIT_CACHE_SIZE_LOG2 = 2,
@@ -565,11 +565,11 @@ static void cache_fill_nolock(Class cls, SEL sel, IMP imp, id receiver)
 {
     cacheUpdateLock.assertLocked();
 
-    // Never cache before +initialize is done
+    // 初始化之前不缓存 Never cache before +initialize is done
     if (!cls->isInitialized()) return;
 
-    // Make sure the entry wasn't added to the cache by some other thread 
-    // before we grabbed the cacheUpdateLock.
+    // 如果缓存里边已经有了此方法，则什么也不做，直接返回
+    // Make sure the entry wasn't added to the cache by some other thread, before we grabbed the cacheUpdateLock.
     if (cache_getImp(cls, sel)) return;
 
     cache_t *cache = getCache(cls);
@@ -579,22 +579,26 @@ static void cache_fill_nolock(Class cls, SEL sel, IMP imp, id receiver)
     mask_t newOccupied = cache->occupied() + 1;
     mask_t capacity = cache->capacity();
     if (cache->isConstantEmptyCache()) {
-        // Cache is read-only. Replace it.
+        // 缓存是只读的，直接替换 Cache is read-only. Replace it.
         cache->reallocate(capacity, capacity ?: INIT_CACHE_SIZE);
-    }
-    else if (newOccupied <= capacity / 4 * 3) {
-        // Cache is less than 3/4 full. Use it as-is.
-    }
-    else {
-        // Cache is too full. Expand it.
+    } else if (newOccupied <= capacity / 4 * 3) {
+        // 缓存容量满足要求，不添加额外处理，后边直接使用 Cache is less than 3/4 full. Use it as-is.
+    } else {
+        // 缓存太满，扩容 Cache is too full. Expand it.
         cache->expand();
     }
 
     // Scan for the first unused slot and insert there.
     // There is guaranteed to be an empty slot because the 
     // minimum size is 4 and we resized at 3/4 full.
+    
     bucket_t *bucket = cache->find(key, receiver);
-    if (bucket->key() == 0) cache->incrementOccupied();
+    
+    if (bucket->key() == 0) {
+        cache->incrementOccupied(); // 让 cache 的 _occupied++; 其中，_occupied 标识已缓存的方法数量。
+    }
+    
+    // 设置 bucket ，即存储方法至缓存
     bucket->set(key, imp);
 }
 

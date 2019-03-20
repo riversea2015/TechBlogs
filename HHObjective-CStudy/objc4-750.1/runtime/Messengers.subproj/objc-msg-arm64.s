@@ -518,10 +518,8 @@ LGetImpMiss:
 *
 * id _objc_msgForward(id self, SEL _cmd,...);
 *
-* _objc_msgForward is the externally-callable
-*   function returned by things like method_getImplementation().
-* _objc_msgForward_impcache is the function pointer actually stored in
-*   method caches.
+* _objc_msgForward is the externally-callable function returned by things like method_getImplementation().
+* _objc_msgForward_impcache is the function pointer actually stored in method caches.
 *
 ********************************************************************/
 
@@ -533,9 +531,9 @@ LGetImpMiss:
 	END_ENTRY __objc_msgForward_impcache
 
 	
-	ENTRY __objc_msgForward // 🍎 14.到这里走不下去了 (⊙﹏⊙)b
+	ENTRY __objc_msgForward // 🍎 14.到这里似乎走不下去了，对于 __objc_msgForward 到底做了什么，得想其他途径了解了 (⊙﹏⊙)b
 
-	adrp	x17, __objc_forward_handler@PAGE
+	adrp	x17, __objc_forward_handler@PAGE // 全局搜索了一下，发现 _objc_forward_handler 就是一个函数指针，可以指向很多函数.
 	ldr	p17, [x17, __objc_forward_handler@PAGEOFF]
 	TailCallFunctionPointer x17
 	

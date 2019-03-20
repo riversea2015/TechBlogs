@@ -4940,23 +4940,21 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
                 _objc_fatal("Memory corruption in class list.");
             }
             
-            // 父类缓存 - Superclass cache.
+            // 3.1 搜索父类缓存 - Superclass cache.
             imp = cache_getImp(curClass, sel);
             if (imp) {
                 if (imp != (IMP)_objc_msgForward_impcache) {
-                    // Found the method in a superclass. Cache it in this class.
+                    // 若在父类中找到了对应方法，将其缓存到本类(并不是父类)中。<- Found the method in a superclass. Cache it in this class.
                     log_and_fill_cache(cls, imp, sel, inst, curClass);
                     goto done;
-                }
-                else {
+                } else {
                     // Found a forward:: entry in a superclass.
-                    // Stop searching, but don't cache yet; call method 
-                    // resolver for this class first.
+                    // Stop searching, but don't cache yet; call method resolver for this class first.
                     break;
                 }
             }
             
-            // 父类方法列表 - Superclass method list.
+            // 3.2 搜索父类方法列表 - Superclass method list.
             Method meth = getMethodNoSuper_nolock(curClass, sel);
             if (meth) {
                 log_and_fill_cache(cls, meth->imp, sel, inst, curClass);
@@ -4966,7 +4964,7 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
         }
     }
 
-    // 4.都找不到的时候 No implementation found. Try method resolver once.
+    // 4.都找不到方法的时候，才尝试方法解析（once） No implementation found. Try method resolver once.
 
     if (resolver  &&  !triedResolver) {
         
@@ -4974,6 +4972,7 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
         _class_resolveMethod(cls, sel, inst); // 🍎 resolveMethod
         runtimeLock.lock();
         
+        // 标识已经尝试过动态方法解析
         // Don't cache the result; we don't hold the lock so it may have 
         // changed already. Re-do the search from scratch instead.
         triedResolver = YES;
@@ -4982,12 +4981,14 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
         goto retry;
     }
 
-    // 如果 resolver 也不起作用，走这里 ☟
+    // 5.如果 resolver 也不起作用，走这里 👉 转发
     
     // No implementation found, and method resolver didn't help. 
     // Use forwarding.
 
     imp = (IMP)_objc_msgForward_impcache; // 🍎 在 “C/C++” 中找不到此方法实现，但在 “汇编” 中找到了 -> 🍎 13.
+    
+    // 6.填充缓存
     cache_fill(cls, sel, imp, inst);
 
  done:

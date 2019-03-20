@@ -518,11 +518,9 @@ void _class_initialize(Class cls)
         }
         
         // Send the +initialize message.
-        // Note that +initialize is sent to the superclass (again) if 
-        // this class doesn't implement +initialize. 2157218
+        // Note that +initialize is sent to the superclass (again) if this class doesn't implement +initialize. 2157218
         if (PrintInitializing) {
-            _objc_inform("INITIALIZE: thread %p: calling +[%s initialize]",
-                         pthread_self(), cls->nameForLogging());
+            _objc_inform("INITIALIZE: thread %p: calling +[%s initialize]", pthread_self(), cls->nameForLogging());
         }
 
         // Exceptions: A +initialize call that throws an exception 
@@ -559,9 +557,8 @@ void _class_initialize(Class cls)
             lockAndFinishInitializing(cls, supercls);
         }
         return;
-    }
-    
-    else if (cls->isInitializing()) {
+        
+    } else if (cls->isInitializing()) {
         // We couldn't set INITIALIZING because INITIALIZING was already set.
         // If this thread set it earlier, continue normally.
         // If some other thread set it, block until initialize is done.
@@ -579,9 +576,9 @@ void _class_initialize(Class cls)
             _setThisThreadIsInitializingClass(cls);
             performForkChildInitialize(cls, supercls);
         }
-    }
-    
-    else if (cls->isInitialized()) {
+        
+    } else if (cls->isInitialized()) {
+        
         // Set CLS_INITIALIZING failed because someone else already 
         //   initialized the class. Continue normally.
         // NOTE this check must come AFTER the ISINITIALIZING case.
@@ -590,9 +587,9 @@ void _class_initialize(Class cls)
         //   initialization and sets INITIALIZING=no and INITIALIZED=yes. 
         //   Skip the ISINITIALIZING clause. Die horribly.
         return;
-    }
-    
-    else {
+        
+    } else {
+        
         // We shouldn't be here. 
         _objc_fatal("thread-safe class init in objc runtime is buggy!");
     }
