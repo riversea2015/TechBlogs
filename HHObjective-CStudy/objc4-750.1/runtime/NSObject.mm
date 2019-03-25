@@ -655,8 +655,8 @@ class AutoreleasePoolPage
     magic_t const magic;
     id *next;
     pthread_t const thread;
-    AutoreleasePoolPage * const parent;
-    AutoreleasePoolPage *child;
+    AutoreleasePoolPage * const parent; // 执行上一个 page
+    AutoreleasePoolPage *child; // 指向下一个 page
     uint32_t const depth;
     uint32_t hiwat;
 
@@ -940,12 +940,19 @@ class AutoreleasePoolPage
         assert(page == hotPage());
         assert(page->full()  ||  DebugPoolAllocation);
 
+        // 1.查找 page->child ，如果 child 未满，就跳出循环，此时 page = page->child；如果没有，就创建一个新的 page
         do {
-            if (page->child) page = page->child;
-            else page = new AutoreleasePoolPage(page);
+            if (page->child) {
+                page = page->child;
+            } else {
+                page = new AutoreleasePoolPage(page);
+            }
         } while (page->full());
 
+        // 2.将上一步得到的 page 设置为 hotPage 即当前活跃的 page
         setHotPage(page);
+        
+        // 3.将 obj 加到 page 里边并返回
         return page->add(obj);
     }
 
@@ -999,11 +1006,17 @@ class AutoreleasePoolPage
 
 
     static __attribute__((noinline))
-    id *autoreleaseNewPage(id obj)
-    {
+    id *autoreleaseNewPage(id obj) {
+        
+        // 获取 page
         AutoreleasePoolPage *page = hotPage();
-        if (page) return autoreleaseFullPage(obj, page);
-        else return autoreleaseNoPage(obj);
+        
+        if (page) {
+            return autoreleaseFullPage(obj, page);
+        } else {
+            // 去创建
+            return autoreleaseNoPage(obj);
+        }
     }
 
 public:
@@ -1016,9 +1029,8 @@ public:
         return obj;
     }
 
-
-    static inline void *push() 
-    {
+    // push
+    static inline void *push() {
         id *dest;
         if (DebugPoolAllocation) {
             // Each autorelease pool starts on a new pool page.
@@ -1037,7 +1049,7 @@ public:
 
         if (DebugPoolAllocation || sdkIsAtLeast(10_12, 10_0, 10_0, 3_0, 2_0)) {
             // OBJC_DEBUG_POOL_ALLOCATION or new SDK. Bad pop is fatal.
-            _objc_fatal
+            _objc_fatal 
                 ("Invalid or prematurely-freed autorelease pool %p.", token);
         }
 
@@ -1857,7 +1869,6 @@ _objc_autoreleasePoolPrint(void)
 {
     AutoreleasePoolPage::printAll();
 }
-
 
 // Same as objc_release but suitable for tail-calling 
 // if you need the value back and don't want to push a frame before this point.
