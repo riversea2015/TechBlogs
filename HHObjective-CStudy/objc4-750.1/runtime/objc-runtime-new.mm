@@ -5712,14 +5712,19 @@ addMethod(Class cls, SEL name, IMP imp, const char *types, bool replace)
     assert(cls->isRealized());
 
     method_t *m;
-    if ((m = getMethodNoSuper_nolock(cls, name))) {
-        // already exists
-        if (!replace) {
+    if ((m = getMethodNoSuper_nolock(cls, name))) { // getMethodNoSuper_nolock() 根据 sel 即 name 遍历 cls 的方法列表，如果找到了就将其返回 (method_t *)
+        
+        // A.能走到这里，说明之前就有这个方法 already exists
+        
+        if (!replace) { // 如果不需要替换，则将原函数指针返回（如果是添加方法：replace == NO，如果是替换方法：replace == YES）
             result = m->imp;
-        } else {
+        } else {        // 如果需要替换，用传进来的 imp 替换，方法返回值是旧的 imp
             result = _method_setImplementation(cls, m, imp);
         }
     } else {
+        
+        // B.没找到，构建一个 method_list_t 里边只有一个元素 (method_t *)，赋值后，并将此列表追加到方法列表的二维数组中。
+        
         // fixme optimize
         method_list_t *newlist;
         newlist = (method_list_t *)calloc(sizeof(*newlist), 1);
@@ -5818,7 +5823,7 @@ addMethods(Class cls, const SEL *names, const IMP *imps, const char **types,
     return failedNames;
 }
 
-
+// 和下面方法都调用了 addMethod() 只是最后一个参数不同，区别在于找到了原有方法的情况下，是替换还是不替换。
 BOOL 
 class_addMethod(Class cls, SEL name, IMP imp, const char *types)
 {
@@ -5828,7 +5833,7 @@ class_addMethod(Class cls, SEL name, IMP imp, const char *types)
     return ! addMethod(cls, name, imp, types ?: "", NO);
 }
 
-
+// 和上面方法都调用了 addMethod() 只是最后一个参数不同，区别在于找到了原有方法的情况下，是替换还是不替换。
 IMP 
 class_replaceMethod(Class cls, SEL name, IMP imp, const char *types)
 {
