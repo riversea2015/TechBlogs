@@ -395,6 +395,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 // *** (关注一下) 获取所有的 valueTransfer，用于值类型转换
 + (NSDictionary *)valueTransformersForModelClass:(Class)modelClass {
+    
 	NSParameterAssert(modelClass != nil);
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLJSONSerializing)]);
 
@@ -402,10 +403,25 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 	for (NSString *key in [modelClass propertyKeys]) {
         
-        // 1.属性名+JSONTransformer 构成的 transformer
+        // 1.属性名 + JSONTransformer 构成的 transformer
+        
 		SEL selector = MTLSelectorWithKeyPattern(key, "JSONTransformer");
+        
 		if ([modelClass respondsToSelector:selector]) {
+            /**
+             
+             这个 imp 可以对应客户实现的方法，如 assigneeJSONTransformer <-> assignee + JSONTransformer：
+             
+             + (NSValueTransformer *)assigneeJSONTransformer {
+                return [MTLJSONAdapter dictionaryTransformerWithModelClass:GHUser.class];
+             }
+             
+             以此为例，执行此方法，及执行 [MTLJSONAdapter dictionaryTransformerWithModelClass:GHUser.class]
+             
+             */
 			IMP imp = [modelClass methodForSelector:selector];
+            
+            // 下边 2 行执行此方法，获取 transformer
 			NSValueTransformer * (*function)(id, SEL) = (__typeof__(function))imp;
 			NSValueTransformer *transformer = function(modelClass, selector);
 
@@ -513,8 +529,10 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 @implementation MTLJSONAdapter (ValueTransformers)
 
 + (NSValueTransformer<MTLTransformerErrorHandling> *)dictionaryTransformerWithModelClass:(Class)modelClass {
+    
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLModel)]);
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLJSONSerializing)]);
+    
 	__block MTLJSONAdapter *adapter;
 	
 	return [MTLValueTransformer
@@ -535,10 +553,13 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 				return nil;
 			}
 
+            // 下边 2 步有没有感觉似曾相识 O(∩_∩)O哈哈~
 			if (!adapter) {
 				adapter = [[self alloc] initWithModelClass:modelClass];
 			}
 			id model = [adapter modelFromJSONDictionary:JSONDictionary error:error];
+            
+            
 			if (model == nil) {
 				*success = NO;
 			}
