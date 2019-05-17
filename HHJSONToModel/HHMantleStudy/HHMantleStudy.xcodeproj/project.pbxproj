@@ -15,6 +15,7 @@
 		92D61632228D0F300085DAA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D61631228D0F300085DAA2 /* main.m */; };
 		92D6163C228D0F300085DAA2 /* HHMantleStudyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D6163B228D0F300085DAA2 /* HHMantleStudyTests.m */; };
 		92D61647228D0F300085DAA2 /* HHMantleStudyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D61646228D0F300085DAA2 /* HHMantleStudyUITests.m */; };
+		92E664C2228E4FBB00558CDA /* HHTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E664C1228E4FBA00558CDA /* HHTestModel.m */; };
 		A5013CBA6E7338CF64D4B8F2 /* libPods-HHMantleStudy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0CB02FC86393CA55D97863 /* libPods-HHMantleStudy.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,8 @@
 		92D61642228D0F300085DAA2 /* HHMantleStudyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HHMantleStudyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D61646228D0F300085DAA2 /* HHMantleStudyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMantleStudyUITests.m; sourceTree = "<group>"; };
 		92D61648228D0F300085DAA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92E664C0228E4FBA00558CDA /* HHTestModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHTestModel.h; sourceTree = "<group>"; };
+		92E664C1228E4FBA00558CDA /* HHTestModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHTestModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +115,8 @@
 				92D61623228D0F2F0085DAA2 /* AppDelegate.m */,
 				92D61625228D0F2F0085DAA2 /* ViewController.h */,
 				92D61626228D0F2F0085DAA2 /* ViewController.m */,
+				92E664C0228E4FBA00558CDA /* HHTestModel.h */,
+				92E664C1228E4FBA00558CDA /* HHTestModel.m */,
 				92D61628228D0F2F0085DAA2 /* Main.storyboard */,
 				92D6162B228D0F300085DAA2 /* Assets.xcassets */,
 				92D6162D228D0F300085DAA2 /* LaunchScreen.storyboard */,
@@ -309,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92D61627228D0F2F0085DAA2 /* ViewController.m in Sources */,
+				92E664C2228E4FBB00558CDA /* HHTestModel.m in Sources */,
 				92D61632228D0F300085DAA2 /* main.m in Sources */,
 				92D61624228D0F2F0085DAA2 /* AppDelegate.m in Sources */,
 			);
@@ -485,7 +491,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMantleStudy/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMantleStudy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -500,7 +509,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMantleStudy/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMantleStudy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -514,7 +526,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMantleStudyTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMantleStudyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -529,7 +545,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMantleStudyTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMantleStudyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -543,7 +563,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMantleStudyUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMantleStudyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -557,7 +581,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P4KTPZ4X29;
 				INFOPLIST_FILE = HHMantleStudyUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhe.HHMantleStudyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

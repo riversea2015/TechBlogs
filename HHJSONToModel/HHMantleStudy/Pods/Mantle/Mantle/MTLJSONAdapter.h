@@ -97,7 +97,7 @@ extern const NSInteger MTLJSONAdapterErrorExceptionThrown;
 extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 
 /// Converts a MTLModel object to and from a JSON dictionary.
-@interface MTLJSONAdapter : NSObject
+@interface MTLJSONAdapter : NSObject // 🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎
 
 /// Attempts to parse a JSON dictionary into a model object.
 ///
@@ -159,7 +159,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///              argument must not be nil.
 ///
 /// Returns an initialized adapter.
-- (id)initWithModelClass:(Class)modelClass;
+- (id)initWithModelClass:(Class)modelClass; // 🍎 初始化 adapter
 
 /// Deserializes a model from a JSON dictionary.
 ///
@@ -174,7 +174,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///
 /// Returns a model object, or nil if a deserialization error occurred or the
 /// model did not validate successfully.
-- (id)modelFromJSONDictionary:(NSDictionary *)JSONDictionary error:(NSError **)error;
+- (id)modelFromJSONDictionary:(NSDictionary *)JSONDictionary error:(NSError **)error; // 🍎 json 转 model
 
 /// Serializes a model into JSON.
 ///

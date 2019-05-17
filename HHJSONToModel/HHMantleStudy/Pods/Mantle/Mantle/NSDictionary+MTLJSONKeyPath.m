@@ -12,6 +12,9 @@
 
 @implementation NSDictionary (MTLJSONKeyPath)
 
+// 比如, 对应 json 的 keyPath 是 person.name.first, 先分解成 person,name,first, 然后一层一层的获取 json[person][name][first],
+// 只不过 Mantle 在解析的时候，用了个for循环，来给用户反馈，到底错误在哪里。
+
 - (id)mtl_valueForJSONKeyPath:(NSString *)JSONKeyPath success:(BOOL *)success error:(NSError **)error {
 	NSArray *components = [JSONKeyPath componentsSeparatedByString:@"."];
 
@@ -36,7 +39,7 @@
 			return nil;
 		}
 
-		result = result[component];
+		result = result[component]; // 注意：此处是在 NSDictionary 的分类里边，所以 self 是 Dictionary！
 	}
 
 	if (success != NULL) *success = YES;

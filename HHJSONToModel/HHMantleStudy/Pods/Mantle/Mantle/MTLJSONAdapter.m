@@ -131,6 +131,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 	return nil;
 }
 
+// 🍎 初始化 adapter
 - (id)initWithModelClass:(Class)modelClass {
 	NSParameterAssert(modelClass != nil);
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLJSONSerializing)]);
@@ -140,16 +141,20 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 	_modelClass = modelClass;
 
-	_JSONKeyPathsByPropertyKey = [modelClass JSONKeyPathsByPropertyKey];
+	_JSONKeyPathsByPropertyKey = [modelClass JSONKeyPathsByPropertyKey]; // 这是一个字典,存放用户定义的 属性名(key) 与 字典中key(value) 的映射关系
 
-	NSSet *propertyKeys = [self.modelClass propertyKeys];
+	NSSet *propertyKeys = [self.modelClass propertyKeys]; // 这是一个集合，利用 runtime 获取的属性名(NSString)的集合
 
 	for (NSString *mappedPropertyKey in _JSONKeyPathsByPropertyKey) {
+        
+        // 1.校验 “保存对应关系的dic” 中的 key 必须是当前类的属性名
 		if (![propertyKeys containsObject:mappedPropertyKey]) {
 			NSAssert(NO, @"%@ is not a property of %@.", mappedPropertyKey, modelClass);
 			return nil;
 		}
 
+        // 2.校验 keypath 必须是字符串或者字符串数组 NSArray<NSString *>
+        // 取出映射表中的 (value)
 		id value = _JSONKeyPathsByPropertyKey[mappedPropertyKey];
 
 		if ([value isKindOfClass:NSArray.class]) {
@@ -165,6 +170,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 		}
 	}
 
+    // *** (关注一下) 获取所有的 valueTransfer，用于值类型转换
 	_valueTransformersByPropertyKey = [self.class valueTransformersForModelClass:modelClass];
 
 	_JSONAdaptersByModelClass = [NSMapTable strongToStrongObjectsMapTable];
@@ -256,9 +262,23 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 	}
 }
 
+// 🍎 json 转 model
 - (id)modelFromJSONDictionary:(NSDictionary *)JSONDictionary error:(NSError **)error {
+    
+    // 1.
+    /**
+     
+     [
+        {...},
+        {...}
+     ]
+     
+     */
+    
 	if ([self.modelClass respondsToSelector:@selector(classForParsingJSONDictionary:)]) {
+        
 		Class class = [self.modelClass classForParsingJSONDictionary:JSONDictionary];
+        
 		if (class == nil) {
 			if (error != NULL) {
 				NSDictionary *userInfo = @{
@@ -280,21 +300,27 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			return [otherAdapter modelFromJSONDictionary:JSONDictionary error:error];
 		}
 	}
+    
+    // 2.用 key 从 json 中取值
 
 	NSMutableDictionary *dictionaryValue = [[NSMutableDictionary alloc] initWithCapacity:JSONDictionary.count];
 
-	for (NSString *propertyKey in [self.modelClass propertyKeys]) {
-		id JSONKeyPaths = self.JSONKeyPathsByPropertyKey[propertyKey];
+	for (NSString *propertyKey in [self.modelClass propertyKeys]) { // 说明1：[self.modelClass propertyKeys] 获取的属性列表只有最上边的一个层级 [废话😆]，那么如何深入呢？
+        
+		id JSONKeyPaths = self.JSONKeyPathsByPropertyKey[propertyKey]; // 说明2：根据属性名获取一个 keypath（其中，JSONKeyPathsByPropertyKey 是用户定义的属性名与 json 中 keypath 的对应关系的字典，比如属性名与json中的key不一致、用户要调整层关系）
 
 		if (JSONKeyPaths == nil) continue;
 
 		id value;
 
+        // 允许 keypath 是数组
 		if ([JSONKeyPaths isKindOfClass:NSArray.class]) {
 			NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
 			for (NSString *keyPath in JSONKeyPaths) {
 				BOOL success = NO;
+                
+                // 根据 keyPath 取值
 				id value = [JSONDictionary mtl_valueForJSONKeyPath:keyPath success:&success error:error];
 
 				if (!success) return nil;
@@ -311,6 +337,9 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 		}
 
 		if (value == nil) continue;
+        
+        
+        // ⚠️ --- value 可能是一个字典、数组、系统or自定义对象 ---
 
 		@try {
 			NSValueTransformer *transformer = self.valueTransformersByPropertyKey[propertyKey];
@@ -334,6 +363,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			}
 
 			dictionaryValue[propertyKey] = value;
+            
 		} @catch (NSException *ex) {
 			NSLog(@"*** Caught exception %@ parsing JSON key path \"%@\" from: %@", ex, JSONKeyPaths, JSONDictionary);
 
@@ -357,11 +387,13 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 		}
 	}
 
+    // 给 model 赋值
 	id model = [self.modelClass modelWithDictionary:dictionaryValue error:error];
 
 	return [model validate:error] ? model : nil;
 }
 
+// *** (关注一下) 获取所有的 valueTransfer，用于值类型转换
 + (NSDictionary *)valueTransformersForModelClass:(Class)modelClass {
 	NSParameterAssert(modelClass != nil);
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLJSONSerializing)]);
@@ -369,6 +401,8 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 	NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
 	for (NSString *key in [modelClass propertyKeys]) {
+        
+        // 1.属性名+JSONTransformer 构成的 transformer
 		SEL selector = MTLSelectorWithKeyPattern(key, "JSONTransformer");
 		if ([modelClass respondsToSelector:selector]) {
 			IMP imp = [modelClass methodForSelector:selector];
@@ -380,6 +414,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			continue;
 		}
 
+        // 2.通过协议方法 JSONTransformerForKey: 提供的 transformer
 		if ([modelClass respondsToSelector:@selector(JSONTransformerForKey:)]) {
 			NSValueTransformer *transformer = [modelClass JSONTransformerForKey:key];
 
@@ -389,6 +424,8 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			}
 		}
 
+        // 3.获取一个属性的 类型、关键字、名字，并保存到结构体里
+        
 		objc_property_t property = class_getProperty(modelClass, key.UTF8String);
 
 		if (property == NULL) continue;
@@ -399,7 +436,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 		};
 
 		NSValueTransformer *transformer = nil;
-
+        // AAA.如果一个属性是 ID 类型：系统的、自定义的（模型间的嵌套）
 		if (*(attributes->type) == *(@encode(id))) {
 			Class propertyClass = attributes->objectClass;
 
@@ -415,6 +452,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			
 			if (transformer == nil) transformer = [NSValueTransformer mtl_validatingTransformerForClass:propertyClass ?: NSObject.class];
 		} else {
+            // BBB.如果不是 ID 类型，则是值类型的 transformer
 			transformer = [self transformerForModelPropertiesOfObjCType:attributes->type] ?: [NSValueTransformer mtl_validatingTransformerForClass:NSValue.class];
 		}
 

@@ -186,8 +186,7 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 		}
 	}];
 
-	// It doesn't really matter if we replace another thread's work, since we do
-	// it atomically and the result should be the same.
+	// It doesn't really matter if we replace another thread's work, since we do it atomically and the result should be the same.
 	objc_setAssociatedObject(self, MTLModelCachedPropertyKeysKey, keys, OBJC_ASSOCIATION_COPY);
 
 	return keys;
