@@ -11,4 +11,8 @@
 
 @implementation HHTestModel
 
++ (NSValueTransformer *)assigneeJSONTransformer {
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:GHUser.class];
+}
+
 @end

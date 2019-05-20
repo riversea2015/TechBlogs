@@ -74,9 +74,11 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 #pragma mark Convenience methods
 
 + (id)modelOfClass:(Class)modelClass fromJSONDictionary:(NSDictionary *)JSONDictionary error:(NSError **)error {
+    
 	MTLJSONAdapter *adapter = [[self alloc] initWithModelClass:modelClass];
 
 	return [adapter modelFromJSONDictionary:JSONDictionary error:error];
+    
 }
 
 + (NSArray *)modelsOfClass:(Class)modelClass fromJSONArray:(NSArray *)JSONArray error:(NSError **)error {
@@ -170,7 +172,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 		}
 	}
 
-    // *** (关注一下) 获取所有的 valueTransfer，用于值类型转换
+    // *** 🍎(关注一下) 获取所有的 valueTransfer，用于值类型转换
 	_valueTransformersByPropertyKey = [self.class valueTransformersForModelClass:modelClass];
 
 	_JSONAdaptersByModelClass = [NSMapTable strongToStrongObjectsMapTable];
@@ -262,7 +264,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 	}
 }
 
-// 🍎 json 转 model
+// 🍎 json 转 model 的入口，会多次进入类似递归
 - (id)modelFromJSONDictionary:(NSDictionary *)JSONDictionary error:(NSError **)error {
     
     // 1.
@@ -340,7 +342,8 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
         
         
         // ⚠️ --- value 可能是一个字典、数组、系统or自定义对象 ---
-
+        // 转换 ⤵️
+        
 		@try {
 			NSValueTransformer *transformer = self.valueTransformersByPropertyKey[propertyKey];
 			if (transformer != nil) {
@@ -352,10 +355,13 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 					id<MTLTransformerErrorHandling> errorHandlingTransformer = (id)transformer;
 
 					BOOL success = YES;
+                    
+                    // 🍎 执行 MTLValueTransformer 的 forwardBlock(value, &success, error)，返回一个 model，或者继续递归
 					value = [errorHandlingTransformer transformedValue:value success:&success error:error];
 
 					if (!success) return nil;
 				} else {
+                    // 入口-2
 					value = [transformer transformedValue:value];
 				}
 
@@ -393,7 +399,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 	return [model validate:error] ? model : nil;
 }
 
-// *** (关注一下) 获取所有的 valueTransfer，用于值类型转换
+// *** 🍎(关注一下) 获取所有的 valueTransfer，用于值类型转换
 + (NSDictionary *)valueTransformersForModelClass:(Class)modelClass {
     
 	NSParameterAssert(modelClass != nil);
@@ -528,6 +534,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 @implementation MTLJSONAdapter (ValueTransformers)
 
+// 创建 adapter 的时候，会执行此方法，构造了 2 个 block，并分别赋值给 adapter.forwardBlock 和 adapter.reverseBlock。
 + (NSValueTransformer<MTLTransformerErrorHandling> *)dictionaryTransformerWithModelClass:(Class)modelClass {
     
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLModel)]);
@@ -535,8 +542,10 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
     
 	__block MTLJSONAdapter *adapter;
 	
-	return [MTLValueTransformer
-		transformerUsingForwardBlock:^ id (id JSONDictionary, BOOL *success, NSError **error) {
+    // 下边 MTLValueTransformer 的类方法中 2 个 block，最终依次传给了 MTLValueTransformer 的两个属性：_forwardBlock / _reverseBlock。
+    
+	return [MTLValueTransformer transformerUsingForwardBlock:^ id (id JSONDictionary, BOOL *success, NSError **error) {
+        
 			if (JSONDictionary == nil) return nil;
 			
 			if (![JSONDictionary isKindOfClass:NSDictionary.class]) {
@@ -557,16 +566,18 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			if (!adapter) {
 				adapter = [[self alloc] initWithModelClass:modelClass];
 			}
+        
+            // 🍎递归
 			id model = [adapter modelFromJSONDictionary:JSONDictionary error:error];
-            
             
 			if (model == nil) {
 				*success = NO;
 			}
 
 			return model;
-		}
-		reverseBlock:^ NSDictionary * (id model, BOOL *success, NSError **error) {
+        
+		} reverseBlock:^ NSDictionary * (id model, BOOL *success, NSError **error) {
+            
 			if (model == nil) return nil;
 			
 			if (![model conformsToProtocol:@protocol(MTLModel)] || ![model conformsToProtocol:@protocol(MTLJSONSerializing)]) {
