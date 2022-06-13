@@ -1,6 +1,6 @@
 #  TechBlogs
 
-这是个人各平台博客的一个集合，早期的博客在 [简书](https://www.jianshu.com/u/71f817a3a70b) 上，新的博客都会首发在 [掘金](https://juejin.cn/user/3931509311147816) 上。（之前也做了一个自己的博客 [https://devhe.com](https://devhe.com)，感觉效果不太好。
+这是个人技术博客的集合，早期的博客在 [简书](https://www.jianshu.com/u/71f817a3a70b) 上，新的博客都会首发在 [掘金](https://juejin.cn/user/3931509311147816) 上。（之前也做了一个自己的博客 [https://devhe.com](https://devhe.com)，感觉效果不太好。
 
 ### 1. 掘金博客（新）
 
