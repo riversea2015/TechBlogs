@@ -1,7 +1,7 @@
 #  TechBlogs
 
 <p align='center'>
-<img src=''>
+<img src='https://avatars.githubusercontent.com/u/13641317?v=4'>
 </p>
 
 <p align='center'>
