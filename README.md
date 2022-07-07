@@ -13,12 +13,12 @@
 
 这是个人技术博客的集合，早期的博客在 [简书](https://www.jianshu.com/u/71f817a3a70b) 上，新的博客都会首发在 [掘金](https://juejin.cn/user/3931509311147816) 上。
 
-### 1. 掘金博客（新）
+### 1. 掘金
 
 - [iOS UITextView 实现类似微博的话题、提及功能](https://juejin.cn/post/7105590718336335902)
 - [ijkplayer 编译-打包-Pod支持](https://juejin.cn/post/7108018078641815565)
 
-### 2. 简书博客
+### 2. 简书
   
 《AFNetworking 源码学习笔记》 5篇：
 
